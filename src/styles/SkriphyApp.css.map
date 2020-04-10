@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,WAAW,CAAC;EACX,UAAU,EAAE,MAAM;EAClB,SAAS,EAAE,GAAG;CACd;;AAED,AAAA,kBAAkB,CAAC;EAClB,UAAU,EAAE,OAAO;EACnB,UAAU,EAAE,GAAG;CACf;;AAED,AAAA,MAAM,CAAC;EACN,SAAS,EAAE,IAAI;EACf,KAAK,EAAE,IAAI;CACX",
+    "sources": [
+        "SkriphyApp.scss"
+    ],
+    "names": [],
+    "file": "SkriphyApp.css"
+}
