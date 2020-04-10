@@ -1,14 +1,28 @@
+html {
+}
+body {
+	font-size: 16px; // base font size
+}
+
+input,
+button {
+	font-size: 1em;
+}
+
 .SkriphyApp {
 	text-align: center;
 	font-size: 1em;
 }
 
-.results-container {
-	background: #f0f0f0;
-	min-height: 1em;
+section {
+	padding: .5em;
 }
 
 footer {
+	padding: .5em;
 	font-size: .8em;
 	color: #777;
+	border-top: 1px solid #ccc;
 }
+
+@import "items-list";

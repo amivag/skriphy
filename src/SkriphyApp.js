@@ -10,28 +10,31 @@ const STATUS_ERROR = "error";
 let giphyAPIKey = "xIuBoWebXJkrn7kaq9jWPrZk6u6prPPy";
 
 function SkriphyApp() {
-  const [searchInputValue, setSearchInputValue] = useState("")
+  const [searchInputValue, setSearchInputValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [apiResults, setApiResults] = useState([]);
   const [apiLoadingStatus, setAPILoadingStatus] = useState(STATUS_IDLE);
 
-  useEffect( () => {
-
+  useEffect(() => {
     setAPILoadingStatus(STATUS_LOADING);
     // https://developers.giphy.com/docs/api/endpoint/#search
     const result = axios(
       `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPIKey}&q=${searchTerm}`
     );
 
-    result.then( (results) => {
-      setAPILoadingStatus(STATUS_IDLE);
-      const imagesData = results.data.data;
-      setApiResults(imagesData)
-      console.log(imagesData)
-    }).catch( e => {
-      setAPILoadingStatus(STATUS_ERROR);
-      console.log("Error...", e)
-    })
+    result
+      .then((results) => {
+        setAPILoadingStatus(STATUS_IDLE);
+        const imagesData = results.data.data;
+        setApiResults(imagesData);
+        //console.log(imagesData)
+      })
+      .catch((e) => {
+        setAPILoadingStatus(STATUS_ERROR);
+        const errorMsg = `Error: ${e}`;
+        window.alert(errorMsg);
+        console.log(errorMsg);
+      });
     //setImagesCollection(result.data);
   }, [searchTerm]);
 
@@ -61,9 +64,9 @@ function SkriphyApp() {
                 e.preventDefault();
                 console.log("Submit!");
                 if (searchInputValue.length > 0) {
-                  setSearchTerm(searchInputValue)
+                  setSearchTerm(searchInputValue);
                 } else {
-                  console.log("Search term too short!")
+                  console.log("Search term too short!");
                 }
               }}
             >
@@ -72,7 +75,7 @@ function SkriphyApp() {
             <button
               type="button"
               onClick={() => {
-                setSearchTerm("");
+                //setSearchTerm("");
                 setSearchInputValue("");
               }}
             >
@@ -81,18 +84,29 @@ function SkriphyApp() {
           </form>
         </section>
         <section className="search-results">
-          {apiResults.length > 0 && <Fragment>
-          <h2>Results: {apiResults.length} images</h2>
+          {apiResults.length > 0 && apiLoadingStatus === STATUS_IDLE && (
+            <Fragment>
+              <h2>
+                Results for '{searchTerm}': {apiResults.length} GIFs
+              </h2>
 
-          <ul className="results-container">
-          {apiResults.map((item) => {
-              const itemId = item?.id;
-              const urlGifPreview = item?.images?.preview_gif?.url;
-              return <li className="item" key={itemId}><img className="img" src={urlGifPreview} /></li>;
-            })}
-            
-          </ul>
-          </Fragment>}
+              <ul className="items-list">
+                {apiResults.map((item) => {
+                  const itemId = item?.id;
+                  const urlGifPreview = item?.images?.preview_gif?.url;
+                  return (
+                    <li className="item" key={itemId}>
+                      <img
+                        className="img"
+                        src={urlGifPreview}
+                        alt={urlGifPreview}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            </Fragment>
+          )}
         </section>
       </main>
       <footer>GIPHY search by Vangelis Erotokritakis (April 2020)</footer>
