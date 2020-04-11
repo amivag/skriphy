@@ -6,23 +6,60 @@ import { SearchBox } from "./components/SearchBox.jsx";
 
 import "./styles/SkriphyApp.css";
 
-const STATUS_LOADING = "loading";
-const STATUS_IDLE = "idle";
-//const STATUS_SUCCESS = "success";
-const STATUS_ERROR = "error";
+const API_STATUS = {
+  LOADING: "loading",
+  IDLE: "idle",
+  SUCCESS: "success",
+  ERROR: "error",
+};
 
 let giphyAPIKey = "xIuBoWebXJkrn7kaq9jWPrZk6u6prPPy";
+
+function getDataFromLocal() {
+  const localImageObjects = localStorage.getItem("imageObjects");
+  const localHiddenImageIds = localStorage.getItem("hiddenImageIds");
+  const localSearchTerm = localStorage.getItem("searchTerm");
+  return {
+    localImageObjects,
+    localSearchTerm,
+    localHiddenImageIds,
+  };
+}
 
 function SkriphyApp() {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  // We use a "search last performed timestamp", to be able to trigger useEffect
+  // multiple times on the same search term
+  const [
+    searchLastPerformedTimestamp,
+    setSearchLastPerformedTimestamp,
+  ] = useState(0);
   const [apiResults, setApiResults] = useState([]);
   const [apiResultsHiddenIds, setApiResultsHiddenIds] = useState([]);
-  const [apiLoadingStatus, setAPILoadingStatus] = useState(STATUS_IDLE);
+  const [apiLoadingStatus, setAPILoadingStatus] = useState(API_STATUS.IDLE);
+
+  useEffect(() => {
+    const {
+      localImageObjects,
+      localSearchTerm,
+      localHiddenImageIds,
+    } = getDataFromLocal();
+    if (localImageObjects) {
+      //setApiResults(JSON.parse(localImageObjects));
+    }
+    if (localSearchTerm) {
+      setSearchInputValue(setSearchTerm);
+    }
+    if (localHiddenImageIds) {
+      console.log(localHiddenImageIds);
+      setApiResultsHiddenIds(JSON.parse(localHiddenImageIds));
+    }
+  }, []);
 
   useEffect(() => {
     if (searchTerm.length > 0) {
-      setAPILoadingStatus(STATUS_LOADING);
+      setAPILoadingStatus(API_STATUS.LOADING);
       setApiResultsHiddenIds([]);
 
       const artificialDelayMilliseconds = 1000;
@@ -35,19 +72,25 @@ function SkriphyApp() {
         );
         result
           .then((results) => {
-            setAPILoadingStatus(STATUS_IDLE);
-            const imagesData = results.data.data;
+            const imagesData = results?.data?.data;
+            if (!imagesData) {
+              // error in received data
+            }
+            localStorage.setItem("imageObjects", JSON.stringify(imagesData));
+            localStorage.setItem("searchTerm", searchTerm);
+            localStorage.setItem("hiddenImageIds", "");
+            setAPILoadingStatus(API_STATUS.SUCCESS);
             setApiResults(imagesData);
           })
           .catch((e) => {
-            setAPILoadingStatus(STATUS_ERROR);
+            setAPILoadingStatus(API_STATUS.ERROR);
             const errorMsg = `Error: ${e}`;
             window.alert(errorMsg);
             console.log(errorMsg);
           });
       }, artificialDelayMilliseconds);
     }
-  }, [searchTerm]);
+  }, [searchLastPerformedTimestamp]);
 
   return (
     <div className="SkriphyApp">
@@ -62,11 +105,13 @@ function SkriphyApp() {
               setSearchInputValue,
               searchTerm,
               setSearchTerm,
+              setSearchLastPerformedTimestamp,
             }}
           />
         </section>
         <section className="search-results">
-          {apiResults.length > 0 && apiLoadingStatus === STATUS_IDLE && (
+          {apiLoadingStatus === API_STATUS.LOADING && <div>SEARCHING...</div>}
+          {apiResults.length >= 0 && apiLoadingStatus === API_STATUS.SUCCESS && (
             <Fragment>
               <h2 className="title">
                 Results for '{searchTerm}': {apiResults.length} GIFs
@@ -78,6 +123,10 @@ function SkriphyApp() {
                 removeItemById={(itemId) => {
                   console.log(`Attempting to remove item id ${itemId}`);
                   setApiResultsHiddenIds([...apiResultsHiddenIds, itemId]);
+                  localStorage.setItem(
+                    "hiddenImageIds",
+                    JSON.stringify(apiResultsHiddenIds)
+                  );
                 }}
               />
             </Fragment>

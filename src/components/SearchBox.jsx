@@ -5,6 +5,7 @@ export const SearchBox = ({
   setSearchInputValue,
   searchTerm,
   setSearchTerm,
+  setSearchLastPerformedTimestamp,
 }) => {
   return (
     <form className="giphy-search-form">
@@ -12,7 +13,7 @@ export const SearchBox = ({
         <input
           className="search-input"
           type="text"
-          name="name"
+          name="searchInput"
           placeholder="Search for Giphies..."
           value={searchInputValue}
           onChange={(e) => {
@@ -30,6 +31,7 @@ export const SearchBox = ({
           setSearchTerm("");
           if (searchInputValue.length > 0) {
             setSearchTerm(searchInputValue);
+            setSearchLastPerformedTimestamp(Date.now());
           } else {
             console.log("Search term too short!");
           }
