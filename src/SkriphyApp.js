@@ -9,6 +9,24 @@ const STATUS_ERROR = "error";
 
 let giphyAPIKey = "xIuBoWebXJkrn7kaq9jWPrZk6u6prPPy";
 
+/**
+ * https://stackoverflow.com/questions/33855641/copy-output-of-a-javascript-variable-to-the-clipboard
+ * @param {*} text
+ */
+function copyToClipboard(text) {
+  var dummy = document.createElement("textarea");
+  // to avoid breaking orgain page when copying more words
+  // cant copy when adding below this code
+  // dummy.style.display = 'none'
+  document.body.appendChild(dummy);
+  //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
+  dummy.value = text;
+  dummy.select();
+  document.execCommand("copy");
+  document.body.removeChild(dummy);
+  console.log(`Copied to clipboard ${text}`);
+}
+
 function SkriphyApp() {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,7 +37,7 @@ function SkriphyApp() {
   useEffect(() => {
     setAPILoadingStatus(STATUS_LOADING);
     setApiResultsHiddenIds([]);
-    
+
     // https://developers.giphy.com/docs/api/endpoint/#search
     const result = axios(
       `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPIKey}&q=${searchTerm}`
@@ -95,6 +113,7 @@ function SkriphyApp() {
                 {apiResults.map((item) => {
                   const itemId = item?.id;
                   const urlGifPreview = item?.images?.preview_gif?.url;
+
                   const isItemIdHidden =
                     apiResultsHiddenIds.indexOf(itemId) >= 0;
                   if (isItemIdHidden) return null;
@@ -107,6 +126,16 @@ function SkriphyApp() {
                           alt={urlGifPreview}
                         />
                         <div className="controls">
+                          <button
+                            type="button"
+                            className="btn copy-link"
+                            onClick={() => {
+                              copyToClipboard(urlGifPreview);
+                              //console.log(`Copied to urlGifPreview`);
+                            }}
+                          >
+                            Copy Link
+                          </button>
                           <button
                             type="button"
                             className="btn remove"
