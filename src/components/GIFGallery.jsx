@@ -67,7 +67,8 @@ const GIFImageItem = ({ itemId, urlGIFPreview, removeItemById }) => {
 };
 
 /**
- * Utility function from...
+ * Utility function
+ * Sourced from...
  * https://stackoverflow.com/questions/33855641/copy-output-of-a-javascript-variable-to-the-clipboard
  * @param {*} text
  */
