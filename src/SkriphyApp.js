@@ -13,10 +13,13 @@ function SkriphyApp() {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [apiResults, setApiResults] = useState([]);
+  const [apiResultsHiddenIds, setApiResultsHiddenIds] = useState([]);
   const [apiLoadingStatus, setAPILoadingStatus] = useState(STATUS_IDLE);
 
   useEffect(() => {
     setAPILoadingStatus(STATUS_LOADING);
+    setApiResultsHiddenIds([]);
+    
     // https://developers.giphy.com/docs/api/endpoint/#search
     const result = axios(
       `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPIKey}&q=${searchTerm}`
@@ -27,7 +30,6 @@ function SkriphyApp() {
         setAPILoadingStatus(STATUS_IDLE);
         const imagesData = results.data.data;
         setApiResults(imagesData);
-        //console.log(imagesData)
       })
       .catch((e) => {
         setAPILoadingStatus(STATUS_ERROR);
@@ -35,7 +37,6 @@ function SkriphyApp() {
         window.alert(errorMsg);
         console.log(errorMsg);
       });
-    //setImagesCollection(result.data);
   }, [searchTerm]);
 
   return (
@@ -94,15 +95,33 @@ function SkriphyApp() {
                 {apiResults.map((item) => {
                   const itemId = item?.id;
                   const urlGifPreview = item?.images?.preview_gif?.url;
-                  return (
-                    <li className="item" key={itemId}>
-                      <img
-                        className="img"
-                        src={urlGifPreview}
-                        alt={urlGifPreview}
-                      />
-                    </li>
-                  );
+                  const isItemIdHidden =
+                    apiResultsHiddenIds.indexOf(itemId) >= 0;
+                  if (isItemIdHidden) return null;
+                  else
+                    return (
+                      <li className="item" key={itemId}>
+                        <img
+                          className="img"
+                          src={urlGifPreview}
+                          alt={urlGifPreview}
+                        />
+                        <div className="controls">
+                          <button
+                            type="button"
+                            className="btn remove"
+                            onClick={(e) => {
+                              setApiResultsHiddenIds([
+                                ...apiResultsHiddenIds,
+                                itemId,
+                              ]);
+                            }}
+                          >
+                            &times;
+                          </button>
+                        </div>
+                      </li>
+                    );
                 })}
               </ul>
             </Fragment>
