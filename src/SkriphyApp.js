@@ -120,7 +120,7 @@ function SkriphyApp() {
           {apiLoadingStatus === API_STATUS.ERROR && (
             <div className="error">
               <span>
-                Oops... there was an error with your request, please try again.
+                Oops... there was an error with your request, maybe try again?
               </span>
             </div>
           )}
@@ -133,17 +133,13 @@ function SkriphyApp() {
                 giphyGalleryItems={apiResults}
                 hiddenItemIds={apiResultsHiddenIds}
                 removeItemById={(itemId) => {
-                  console.log(`Attempting to remove item id ${itemId}`);
+                  //console.log(`Attempting to remove item id ${itemId}`);
                   const updatedHiddenIds = [...apiResultsHiddenIds, itemId];
                   setApiResultsHiddenIds(updatedHiddenIds);
                   localStorage.setItem(
                     "hiddenImageIds",
                     JSON.stringify(updatedHiddenIds)
                   );
-                  const localHiddenImageIds = localStorage.getItem(
-                    "hiddenImageIds"
-                  );
-                  console.log(localHiddenImageIds);
                 }}
               />
             </Fragment>
