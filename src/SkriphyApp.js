@@ -1,5 +1,8 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
+
+import { GIFGallery } from "./components/GIFGallery.jsx";
+
 import "./styles/SkriphyApp.css";
 
 const STATUS_LOADING = "loading";
@@ -19,7 +22,7 @@ function SkriphyApp() {
   useEffect(() => {
     setAPILoadingStatus(STATUS_LOADING);
     setApiResultsHiddenIds([]);
-    
+
     // https://developers.giphy.com/docs/api/endpoint/#search
     const result = axios(
       `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPIKey}&q=${searchTerm}`
@@ -91,39 +94,14 @@ function SkriphyApp() {
                 Results for '{searchTerm}': {apiResults.length} GIFs
               </h2>
 
-              <ul className="items-list">
-                {apiResults.map((item) => {
-                  const itemId = item?.id;
-                  const urlGifPreview = item?.images?.preview_gif?.url;
-                  const isItemIdHidden =
-                    apiResultsHiddenIds.indexOf(itemId) >= 0;
-                  if (isItemIdHidden) return null;
-                  else
-                    return (
-                      <li className="item" key={itemId}>
-                        <img
-                          className="img"
-                          src={urlGifPreview}
-                          alt={urlGifPreview}
-                        />
-                        <div className="controls">
-                          <button
-                            type="button"
-                            className="btn remove"
-                            onClick={(e) => {
-                              setApiResultsHiddenIds([
-                                ...apiResultsHiddenIds,
-                                itemId,
-                              ]);
-                            }}
-                          >
-                            &times;
-                          </button>
-                        </div>
-                      </li>
-                    );
-                })}
-              </ul>
+              <GIFGallery
+                giphyGalleryItems={apiResults}
+                hiddenItemIds={apiResultsHiddenIds}
+                removeItemById={(itemId) => {
+                  console.log(`Attempting to remove item id ${itemId}`);
+                  setApiResultsHiddenIds([...apiResultsHiddenIds, itemId]);
+                }}
+              />
             </Fragment>
           )}
         </section>
