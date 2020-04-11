@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 /**
  * Extract useful properties from a GIF image object (GIPHY API).
@@ -30,17 +31,25 @@ export const GIFGallery = ({
 
           if (!isItemIdHidden) {
             return (
-              <GIFImageItem {...{ itemId, urlGIFPreview, removeItemById }} />
+              <GIFImageItem
+                key={itemId}
+                {...{ itemId, urlGIFPreview, removeItemById }}
+              />
             );
           }
         })}
       </ul>
     );
 };
+GIFGallery.propTypes = {
+  giphyGalleryItems: PropTypes.array,
+  hiddenItemIds: PropTypes.array,
+  removeItemById: PropTypes.func,
+};
 
 const GIFImageItem = ({ itemId, urlGIFPreview, removeItemById }) => {
   return (
-    <li className="image-item" key={itemId}>
+    <li className="image-item">
       <img className="img" src={urlGIFPreview} alt={urlGIFPreview} />
       <div className="controls">
         <button
@@ -64,6 +73,11 @@ const GIFImageItem = ({ itemId, urlGIFPreview, removeItemById }) => {
       </div>
     </li>
   );
+};
+GIFImageItem.propTypes = {
+  itemId: PropTypes.string,
+  urlGIFPreview: PropTypes.string,
+  removeItemById: PropTypes.func,
 };
 
 /**
