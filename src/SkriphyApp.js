@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 
 import { GIFGallery } from "./components/GIFGallery.jsx";
+import { SearchBox } from "./components/SearchBox.jsx";
 
 import "./styles/SkriphyApp.css";
 
@@ -20,77 +21,54 @@ function SkriphyApp() {
   const [apiLoadingStatus, setAPILoadingStatus] = useState(STATUS_IDLE);
 
   useEffect(() => {
-    setAPILoadingStatus(STATUS_LOADING);
-    setApiResultsHiddenIds([]);
+    if (searchTerm.length > 0) {
+      setAPILoadingStatus(STATUS_LOADING);
+      setApiResultsHiddenIds([]);
 
-    // https://developers.giphy.com/docs/api/endpoint/#search
-    const result = axios(
-      `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPIKey}&q=${searchTerm}`
-    );
+      const artificialDelayMilliseconds = 1000;
+      setTimeout(function () {
+        //your code to be executed after 1 second
 
-    result
-      .then((results) => {
-        setAPILoadingStatus(STATUS_IDLE);
-        const imagesData = results.data.data;
-        setApiResults(imagesData);
-      })
-      .catch((e) => {
-        setAPILoadingStatus(STATUS_ERROR);
-        const errorMsg = `Error: ${e}`;
-        window.alert(errorMsg);
-        console.log(errorMsg);
-      });
+        // https://developers.giphy.com/docs/api/endpoint/#search
+        const result = axios(
+          `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPIKey}&q=${searchTerm}`
+        );
+        result
+          .then((results) => {
+            setAPILoadingStatus(STATUS_IDLE);
+            const imagesData = results.data.data;
+            setApiResults(imagesData);
+          })
+          .catch((e) => {
+            setAPILoadingStatus(STATUS_ERROR);
+            const errorMsg = `Error: ${e}`;
+            window.alert(errorMsg);
+            console.log(errorMsg);
+          });
+      }, artificialDelayMilliseconds);
+    }
   }, [searchTerm]);
 
   return (
     <div className="SkriphyApp">
       <header className="App-header">
-        <h1 className="title">SKRIPHY</h1>
+        <h1 className="title">skriphy</h1>
       </header>
       <main>
         <section className="giphy-search">
-          <form className="giphy-search-form">
-            <label>
-              <input
-                type="text"
-                name="name"
-                placeholder="Search for Giphies..."
-                value={searchInputValue}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  setSearchInputValue(val);
-                }}
-              />
-            </label>
-            <button
-              type="submit"
-              onClick={(e) => {
-                e.preventDefault();
-                console.log("Submit!");
-                if (searchInputValue.length > 0) {
-                  setSearchTerm(searchInputValue);
-                } else {
-                  console.log("Search term too short!");
-                }
-              }}
-            >
-              Go
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                //setSearchTerm("");
-                setSearchInputValue("");
-              }}
-            >
-              Clear
-            </button>
-          </form>
+          <SearchBox
+            {...{
+              searchInputValue,
+              setSearchInputValue,
+              searchTerm,
+              setSearchTerm,
+            }}
+          />
         </section>
         <section className="search-results">
           {apiResults.length > 0 && apiLoadingStatus === STATUS_IDLE && (
             <Fragment>
-              <h2>
+              <h2 className="title">
                 Results for '{searchTerm}': {apiResults.length} GIFs
               </h2>
 
