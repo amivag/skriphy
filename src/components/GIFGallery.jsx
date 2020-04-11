@@ -1,62 +1,73 @@
 import React from "react";
 
-function extractGiphyItemProperties(giphyApiItem) {
+/**
+ * Extract useful properties from a GIF image object (GIPHY API).
+ * // https://developers.giphy.com/docs/api/schema
+ * @param {*} giphyImageObject
+ */
+function extractGiphyItemProperties(giphyImageObject) {
   return {
-    itemId: giphyApiItem?.id,
-    urlGIFPreview: giphyApiItem?.images?.preview_gif?.url,
+    itemId: giphyImageObject?.id,
+    urlGIFPreview: giphyImageObject?.images?.preview_gif?.url,
   };
 }
 
-export function GIFGallery({
+export const GIFGallery = ({
   giphyGalleryItems,
   hiddenItemIds,
   removeItemById,
-}) {
+}) => {
   if (!giphyGalleryItems) return null;
   else
     return (
       <ul className="items-list">
-        {giphyGalleryItems.map((giphyAPIItem) => {
+        {giphyGalleryItems.map((giphyImageObject) => {
           const { itemId, urlGIFPreview } = extractGiphyItemProperties(
-            giphyAPIItem
+            giphyImageObject
           );
 
           const isItemIdHidden = hiddenItemIds.indexOf(itemId) >= 0;
-          if (isItemIdHidden) return null;
-          else
+
+          if (!isItemIdHidden) {
             return (
-              <li className="item" key={itemId}>
-                <img className="img" src={urlGIFPreview} alt={urlGIFPreview} />
-                <div className="controls">
-                  <button
-                    type="button"
-                    className="btn copy-link"
-                    onClick={() => {
-                      copyToClipboard(urlGIFPreview);
-                    }}
-                  >
-                    Copy Link
-                  </button>
-                  <button
-                    type="button"
-                    className="btn remove"
-                    onClick={() => {
-                      removeItemById(itemId);
-                    }}
-                  >
-                    &times;
-                  </button>
-                </div>
-              </li>
+              <GIFImageItem {...{ itemId, urlGIFPreview, removeItemById }} />
             );
+          }
         })}
       </ul>
     );
-}
+};
 
-//export default GIFGallery;
+const GIFImageItem = ({ itemId, urlGIFPreview, removeItemById }) => {
+  return (
+    <li className="image-item" key={itemId}>
+      <img className="img" src={urlGIFPreview} alt={urlGIFPreview} />
+      <div className="controls">
+        <button
+          type="button"
+          className="btn copy-link"
+          onClick={() => {
+            copyToClipboard(urlGIFPreview);
+          }}
+        >
+          Copy Link
+        </button>
+        <button
+          type="button"
+          className="btn remove"
+          onClick={() => {
+            removeItemById(itemId);
+          }}
+        >
+          &times;
+        </button>
+      </div>
+    </li>
+  );
+};
 
 /**
+ * Utility function from...
  * https://stackoverflow.com/questions/33855641/copy-output-of-a-javascript-variable-to-the-clipboard
  * @param {*} text
  */
@@ -71,5 +82,5 @@ function copyToClipboard(text) {
   dummy.select();
   document.execCommand("copy");
   document.body.removeChild(dummy);
-  console.log(`Copied to clipboard ${text}`);
+  //console.log(`Copied to clipboard ${text}`);
 }
