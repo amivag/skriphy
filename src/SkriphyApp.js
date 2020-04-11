@@ -21,8 +21,8 @@ function getDataFromLocal() {
   const localSearchTerm = localStorage.getItem("searchTerm");
   return {
     localImageObjects,
-    localSearchTerm,
     localHiddenImageIds,
+    localSearchTerm,
   };
 }
 
@@ -30,7 +30,7 @@ function SkriphyApp() {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   // We use a "search last performed timestamp", to be able to trigger useEffect
-  // multiple times on the same search term
+  //  multiple times on the same search term
   const [
     searchLastPerformedTimestamp,
     setSearchLastPerformedTimestamp,
@@ -42,17 +42,19 @@ function SkriphyApp() {
   useEffect(() => {
     const {
       localImageObjects,
-      localSearchTerm,
       localHiddenImageIds,
+      localSearchTerm,
     } = getDataFromLocal();
+
     if (localImageObjects) {
-      //setApiResults(JSON.parse(localImageObjects));
+      //console.log(localImageObjects);
+      setApiResults(JSON.parse(localImageObjects));
+      setAPILoadingStatus(API_STATUS.SUCCESS);
     }
     if (localSearchTerm) {
-      setSearchInputValue(setSearchTerm);
+      setSearchInputValue(localSearchTerm);
     }
     if (localHiddenImageIds) {
-      console.log(localHiddenImageIds);
       setApiResultsHiddenIds(JSON.parse(localHiddenImageIds));
     }
   }, []);
@@ -110,23 +112,38 @@ function SkriphyApp() {
           />
         </section>
         <section className="search-results">
-          {apiLoadingStatus === API_STATUS.LOADING && <div>SEARCHING...</div>}
-          {apiResults.length >= 0 && apiLoadingStatus === API_STATUS.SUCCESS && (
+          {apiLoadingStatus === API_STATUS.LOADING && (
+            <div className="loading">
+              <span>SEARCHING...</span>
+            </div>
+          )}
+          {apiLoadingStatus === API_STATUS.ERROR && (
+            <div className="error">
+              <span>
+                Oops... there was an error with your request, please try again.
+              </span>
+            </div>
+          )}
+          {apiLoadingStatus === API_STATUS.SUCCESS && (
             <Fragment>
               <h2 className="title">
-                Results for '{searchTerm}': {apiResults.length} GIFs
+                Results for '{searchTerm}' ({apiResults.length})
               </h2>
-
               <GIFGallery
                 giphyGalleryItems={apiResults}
                 hiddenItemIds={apiResultsHiddenIds}
                 removeItemById={(itemId) => {
                   console.log(`Attempting to remove item id ${itemId}`);
-                  setApiResultsHiddenIds([...apiResultsHiddenIds, itemId]);
+                  const updatedHiddenIds = [...apiResultsHiddenIds, itemId];
+                  setApiResultsHiddenIds(updatedHiddenIds);
                   localStorage.setItem(
                     "hiddenImageIds",
-                    JSON.stringify(apiResultsHiddenIds)
+                    JSON.stringify(updatedHiddenIds)
                   );
+                  const localHiddenImageIds = localStorage.getItem(
+                    "hiddenImageIds"
+                  );
+                  console.log(localHiddenImageIds);
                 }}
               />
             </Fragment>
