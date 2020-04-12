@@ -14,9 +14,14 @@ export const GIFGallery = ({
     return (
       <ul className="items-list">
         {giphyGalleryItems.map((giphyImageObject) => {
-          const { itemId, urlGIFPreview } = extractPropertiesFromAPIImageObject(
-            giphyImageObject
-          );
+          const {
+            itemId,
+            url,
+            urlGIFOriginal,
+            urlGIFPreview,
+            urlGIFFixedHeight,
+            urlGIFFixedWidth,
+          } = extractPropertiesFromAPIImageObject(giphyImageObject);
 
           const isItemIdHidden = hiddenItemIds.indexOf(itemId) >= 0;
 
@@ -24,7 +29,15 @@ export const GIFGallery = ({
             return (
               <GIFImageItem
                 key={itemId}
-                {...{ itemId, urlGIFPreview, removeItemById }}
+                {...{
+                  itemId,
+                  url,
+                  urlGIFOriginal,
+                  urlGIFPreview,
+                  urlGIFFixedHeight,
+                  urlGIFFixedWidth,
+                  removeItemById,
+                }}
               />
             );
           }
@@ -38,17 +51,25 @@ GIFGallery.propTypes = {
   removeItemById: PropTypes.func,
 };
 
-const GIFImageItem = ({ itemId, urlGIFPreview, removeItemById }) => {
+const GIFImageItem = ({
+  itemId,
+  url,
+  urlGIFOriginal,
+  urlGIFPreview,
+  urlGIFFixedHeight,
+  urlGIFFixedWidth,
+  removeItemById,
+}) => {
   return (
     <li className="image-item">
-      <img className="img" src={urlGIFPreview} alt={urlGIFPreview} />
+      <img className="img" src={urlGIFFixedWidth} alt={urlGIFFixedWidth} />
       <div className="controls">
         <button
           title="Copy link to clipboard"
           type="button"
           className="btn copy-link"
           onClick={() => {
-            copyTextToClipboard(urlGIFPreview);
+            copyTextToClipboard(url);
           }}
         >
           C

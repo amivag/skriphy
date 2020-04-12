@@ -158,9 +158,6 @@ function SkriphyApp() {
         </section>
       </main>
       <footer>
-        <div className="info">
-          GIPHY search by Vangelis Erotokritakis (April 2020)
-        </div>
         <div className="actions">
           <button type="button" className="btn reset-app" onClick={resetApp}>
             Reset Everything!
@@ -180,6 +177,10 @@ function SkriphyApp() {
               }}
             />
           </label>
+        </div>
+        <hr />
+        <div className="info">
+          GIPHY search by Vangelis Erotokritakis (April 2020)
         </div>
       </footer>
     </div>

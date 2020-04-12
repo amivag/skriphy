@@ -11,7 +11,12 @@ import PropTypes from "prop-types";
 export function extractPropertiesFromAPIImageObject(giphyImageObject) {
   return {
     itemId: giphyImageObject?.id,
+    url: giphyImageObject?.url,
+    urlGIFOriginal: giphyImageObject?.images?.original?.url,
+    urlGIFDownsized: giphyImageObject?.images?.downsized?.url,
     urlGIFPreview: giphyImageObject?.images?.preview_gif?.url,
+    urlGIFFixedHeight: giphyImageObject?.images?.fixed_height?.url,
+    urlGIFFixedWidth: giphyImageObject?.images?.fixed_width?.url,
   };
 }
 
