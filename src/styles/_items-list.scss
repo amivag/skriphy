@@ -1,14 +1,55 @@
 .items-list {
-	background: #f0f0f0;
-	min-height: 1em;
-	list-style: none;
+  font-size: 1em;
+  line-height: 1.2em;
+  background: #f0f0f0;
+  min-height: 1em;
+  list-style: none;
 
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
 
-	> .item {
-		padding: .2em;
-	}
+.items-list > .image-item {
+  padding: 0;
+  margin: 0.2em;
+  position: relative;
+
+  .controls {
+    opacity: 0.8;
+    position: absolute;
+    font-size: 0.8em;
+    top: 0;
+    right: 0;
+    .btn {
+      font-size: 1em;
+      line-height: 1.1em;
+      padding: 0.4em;
+      border: none;
+      background: #f0f0f0;
+      color: #555;
+      margin: 0.08em;
+    }
+    .btn:hover {
+      background: #fff;
+    }
+  }
+}
+
+@media screen and (min-width: $desktop-min-width) {
+  .items-list > .image-item {
+    .controls {
+      display: none;
+    }
+  }
+  .items-list > .image-item:hover {
+    .controls {
+      display: block;
+      .btn {
+        font-size: 1em;
+        padding: 0.5em;
+      }
+    }
+  }
 }

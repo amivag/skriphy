@@ -44,15 +44,17 @@ const GIFImageItem = ({ itemId, urlGIFPreview, removeItemById }) => {
       <img className="img" src={urlGIFPreview} alt={urlGIFPreview} />
       <div className="controls">
         <button
+          title="Copy link to clipboard"
           type="button"
           className="btn copy-link"
           onClick={() => {
             copyTextToClipboard(urlGIFPreview);
           }}
         >
-          Copy Link
+          C
         </button>
         <button
+          title="Remove image"
           type="button"
           className="btn remove"
           onClick={() => {

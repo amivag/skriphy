@@ -10,11 +10,24 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+  min-width: 100vw;
+  height: 100%;
+  min-height: 100vh;
 }
 
 .SkriphyApp {
   text-align: center;
   font-size: 1em;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 .SkriphyApp section {
@@ -34,6 +47,8 @@ body {
 }
 
 .SkriphyApp .items-list {
+  font-size: 1em;
+  line-height: 1.2em;
   background: #f0f0f0;
   min-height: 1em;
   list-style: none;
@@ -50,7 +65,51 @@ body {
           align-items: center;
 }
 
-.SkriphyApp .items-list > .item {
-  padding: .2em;
+.SkriphyApp .items-list > .image-item {
+  padding: 0;
+  margin: 0.2em;
+  position: relative;
+}
+
+.SkriphyApp .items-list > .image-item .controls {
+  opacity: 0.8;
+  position: absolute;
+  font-size: 0.8em;
+  top: 0;
+  right: 0;
+}
+
+.SkriphyApp .items-list > .image-item .controls .btn {
+  font-size: 1em;
+  line-height: 1.1em;
+  padding: 0.4em;
+  border: none;
+  background: #f0f0f0;
+  color: #555;
+  margin: 0.08em;
+}
+
+.SkriphyApp .items-list > .image-item .controls .btn:hover {
+  background: #fff;
+}
+
+@media screen and (min-width: 641px) {
+  .SkriphyApp .items-list > .image-item .controls {
+    display: none;
+  }
+  .SkriphyApp .items-list > .image-item:hover .controls {
+    display: block;
+  }
+  .SkriphyApp .items-list > .image-item:hover .controls .btn {
+    font-size: 1em;
+    padding: 0.5em;
+  }
+}
+
+@media screen and (min-width: 641px) {
+  .SkriphyApp {
+    text-align: center;
+    background: yellow;
+  }
 }
 /*# sourceMappingURL=SkriphyApp.css.map */

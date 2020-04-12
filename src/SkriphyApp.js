@@ -55,6 +55,7 @@ function SkriphyApp() {
     }
     if (localSearchTerm) {
       setSearchInputValue(localSearchTerm);
+      setSearchTerm(localSearchTerm);
     }
     if (localHiddenImageIds) {
       setApiResultsHiddenIds(localHiddenImageIds);
@@ -103,7 +104,7 @@ function SkriphyApp() {
 
   return (
     <div className="SkriphyApp">
-      <div className="top"></div>
+      {/* <div className="top"></div> */}
       <header>
         <h1 className="title">skriphy</h1>
       </header>
