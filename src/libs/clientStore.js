@@ -1,4 +1,4 @@
-// Handle the data storage on the client
+// Handle the data storage on the client side (i.e. localStorage)
 
 const STORAGE_KEY = {
   GIPHY_API_KEY: "giphyAPIKey",
@@ -34,7 +34,7 @@ export function getDataFromLocal() {
 export function saveNewSearchDataToLocal({ searchTerm, imageObjects }) {
   localStorage.setItem(STORAGE_KEY.IMAGE_OBJECTS, JSON.stringify(imageObjects));
   localStorage.setItem(STORAGE_KEY.SEARCH_TERM, searchTerm);
-  localStorage.setItem(STORAGE_KEY.HIDDEN_IMAGE_IDS, ""); // it's a new search, remove previous hidden data
+  localStorage.setItem(STORAGE_KEY.HIDDEN_IMAGE_IDS, ""); // it's a new search, remove previous hidden image data
 }
 
 export function saveHiddenImageIds(updatedHiddenImageIds) {
