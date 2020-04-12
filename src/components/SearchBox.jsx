@@ -44,10 +44,10 @@ export const SearchBox = ({
           Go
         </button>
         <button
+          disabled={searchInputValue.length === 0}
           className="btn clear-search"
           type="button"
           onClick={() => {
-            //setSearchTerm("");
             setSearchInputValue("");
           }}
         >

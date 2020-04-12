@@ -152,6 +152,7 @@ function SkriphyApp() {
         GIPHY search by Vangelis Erotokritakis (April 2020) |{" "}
         <button type="button" className="btn reset-app" onClick={resetApp}>
           Reset Everything!
+        </button>
       </footer>
     </div>
   );
