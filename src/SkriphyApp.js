@@ -103,7 +103,18 @@ function SkriphyApp() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchLastPerformedTimestamp]);
 
+  const removeItemById = (itemId) => {
+    const updatedHiddenIds = [...apiResultsHiddenIds, itemId];
+    const updatedHiddenIdsUniqueSet = new Set(updatedHiddenIds);
+    const updatedHiddenIdsUnique = [...updatedHiddenIdsUniqueSet];
+    setApiResultsHiddenIds(updatedHiddenIdsUnique);
+    clientStore.saveHiddenImageIds(updatedHiddenIdsUnique);
+  };
+
   const isAPIKeyEntered = giphyAPIKey.length > 8;
+
+  const visibleSearchResultsCount =
+    apiResults.length - apiResultsHiddenIds.length;
 
   return (
     <div className="SkriphyApp">
@@ -154,17 +165,15 @@ function SkriphyApp() {
               )}
               {apiLoadingStatus === API_STATUS.SUCCESS && (
                 <div className="state-success">
-                  <h2 className="title">
-                    Results for '{searchTerm}' ({apiResults.length})
-                  </h2>
+                  {searchTerm.length > 0 && (
+                    <h2 className="title">
+                      Results for '{searchTerm}' ({visibleSearchResultsCount})
+                    </h2>
+                  )}
                   <GIFGallery
                     giphyGalleryItems={apiResults}
                     hiddenItemIds={apiResultsHiddenIds}
-                    removeItemById={(itemId) => {
-                      const updatedHiddenIds = [...apiResultsHiddenIds, itemId];
-                      setApiResultsHiddenIds(updatedHiddenIds);
-                      clientStore.saveHiddenImageIds(updatedHiddenIds);
-                    }}
+                    removeItemById={removeItemById}
                   />
                 </div>
               )}
