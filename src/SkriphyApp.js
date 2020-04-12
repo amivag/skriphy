@@ -4,6 +4,13 @@ import axios from "axios";
 import { GIFGallery } from "./components/GIFGallery.jsx";
 import { SearchBox } from "./components/SearchBox.jsx";
 
+import {
+  getDataFromLocal,
+  saveNewSearchDataToLocal,
+  saveHiddenImageIds,
+  resetLocalDataExceptAPIKey,
+} from "./libs/clientStore";
+
 import "./styles/SkriphyApp.css";
 
 const API_STATUS = {
@@ -13,24 +20,13 @@ const API_STATUS = {
   ERROR: "error",
 };
 
-let giphyAPIKey = "xIuBoWebXJkrn7kaq9jWPrZk6u6prPPy";
-
-function getDataFromLocal() {
-  const localImageObjects = localStorage.getItem("imageObjects");
-  const localHiddenImageIds = localStorage.getItem("hiddenImageIds");
-  const localSearchTerm = localStorage.getItem("searchTerm");
-  return {
-    localImageObjects,
-    localHiddenImageIds,
-    localSearchTerm,
-  };
-}
+let giphyAPIKey = "xIuBoWebXJkrn7kaq9jWPrZk6u6prPPy"; //TODO: Make dynamic
 
 function SkriphyApp() {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  // We use a "search last performed timestamp", to be able to trigger useEffect
-  //  multiple times on the same search term
+  // We use a "search last performed" timestamp, to be able to trigger useEffect
+  //  repeatedly on the same search term if wanted.
   const [
     searchLastPerformedTimestamp,
     setSearchLastPerformedTimestamp,
@@ -38,6 +34,14 @@ function SkriphyApp() {
   const [apiResults, setApiResults] = useState([]);
   const [apiResultsHiddenIds, setApiResultsHiddenIds] = useState([]);
   const [apiLoadingStatus, setAPILoadingStatus] = useState(API_STATUS.IDLE);
+
+  const resetApp = () => {
+    resetLocalDataExceptAPIKey();
+    setSearchInputValue("");
+    setApiResults([]);
+    setApiResultsHiddenIds([]);
+    setAPILoadingStatus(API_STATUS.IDLE);
+  };
 
   useEffect(() => {
     const {
@@ -63,21 +67,21 @@ function SkriphyApp() {
       setAPILoadingStatus(API_STATUS.LOADING);
       setApiResultsHiddenIds([]);
 
-      const artificialDelayMilliseconds = 1000;
+      const artificialDelayMilliseconds = 1000; // for simulating slower network
       setTimeout(function () {
         // https://developers.giphy.com/docs/api/endpoint/#search
-        const result = axios(
-          `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPIKey}&q=${searchTerm}`
-        );
-        result
+        const searchURL = `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPIKey}&q=${searchTerm}`;
+        const searchResult = axios(searchURL);
+        searchResult
           .then((results) => {
             const imagesData = results?.data?.data;
             if (!imagesData) {
               // error in received data
             }
-            localStorage.setItem("imageObjects", JSON.stringify(imagesData));
-            localStorage.setItem("searchTerm", searchTerm);
-            localStorage.setItem("hiddenImageIds", "");
+            saveNewSearchDataToLocal({
+              searchTerm,
+              imageObjects: imagesData,
+            });
             setAPILoadingStatus(API_STATUS.SUCCESS);
             setApiResults(imagesData);
           })
@@ -109,20 +113,25 @@ function SkriphyApp() {
           />
         </section>
         <section className="search-results">
+          {apiLoadingStatus === API_STATUS.IDLE && (
+            <div className="state-idle">
+              <span>Search for something...</span>
+            </div>
+          )}
           {apiLoadingStatus === API_STATUS.LOADING && (
-            <div className="loading">
-              <span>SEARCHING...</span>
+            <div className="state-loading">
+              <span>Searching...</span>
             </div>
           )}
           {apiLoadingStatus === API_STATUS.ERROR && (
-            <div className="error">
+            <div className="state-error">
               <span>
                 Oops... there was an error with your request, maybe try again?
               </span>
             </div>
           )}
           {apiLoadingStatus === API_STATUS.SUCCESS && (
-            <Fragment>
+            <div className="state-success">
               <h2 className="title">
                 Results for '{searchTerm}' ({apiResults.length})
               </h2>
@@ -130,20 +139,21 @@ function SkriphyApp() {
                 giphyGalleryItems={apiResults}
                 hiddenItemIds={apiResultsHiddenIds}
                 removeItemById={(itemId) => {
-                  //console.log(`Attempting to remove item id ${itemId}`);
                   const updatedHiddenIds = [...apiResultsHiddenIds, itemId];
                   setApiResultsHiddenIds(updatedHiddenIds);
-                  localStorage.setItem(
-                    "hiddenImageIds",
-                    JSON.stringify(updatedHiddenIds)
-                  );
+                  saveHiddenImageIds(updatedHiddenIds);
                 }}
               />
-            </Fragment>
+            </div>
           )}
         </section>
       </main>
-      <footer>GIPHY search by Vangelis Erotokritakis (April 2020)</footer>
+      <footer>
+        GIPHY search by Vangelis Erotokritakis (April 2020) |{" "}
+        <button type="button" className="btn reset-app" onClick={resetApp}>
+          Reset Everything!
+        </button>
+      </footer>
     </div>
   );
 }

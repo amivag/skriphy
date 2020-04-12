@@ -1,15 +1,19 @@
 import React from "react";
 
+const MIN_SEARCH_TERM_CHARS = 3;
+
 export const SearchBox = ({
   searchInputValue,
   setSearchInputValue,
-  searchTerm,
   setSearchTerm,
   setSearchLastPerformedTimestamp,
 }) => {
+  const isSearchActionAllowed =
+    searchInputValue.length > 0 &&
+    searchInputValue.length >= MIN_SEARCH_TERM_CHARS;
   return (
     <form className="giphy-search-form">
-      <label>
+      <label className="search-input-label">
         <input
           className="search-input"
           type="text"
@@ -22,33 +26,34 @@ export const SearchBox = ({
           }}
         />
       </label>
-      <button
-        className="btn submit"
-        type="submit"
-        onClick={(e) => {
-          e.preventDefault();
-          console.log("Submit!");
-          setSearchTerm("");
-          if (searchInputValue.length > 0) {
-            setSearchTerm(searchInputValue);
-            setSearchLastPerformedTimestamp(Date.now());
-          } else {
-            console.log("Search term too short!");
-          }
-        }}
-      >
-        Go
-      </button>
-      <button
-        className="btn clear-search"
-        type="button"
-        onClick={() => {
-          //setSearchTerm("");
-          setSearchInputValue("");
-        }}
-      >
-        Clear
-      </button>
+      <div className="search-actions">
+        <button
+          disabled={!isSearchActionAllowed}
+          className="btn submit"
+          type="submit"
+          onClick={(e) => {
+            e.preventDefault();
+            if (isSearchActionAllowed) {
+              setSearchTerm(searchInputValue);
+              setSearchLastPerformedTimestamp(Date.now());
+            } else {
+              console.log("Search term too short!");
+            }
+          }}
+        >
+          Go
+        </button>
+        <button
+          disabled={searchInputValue.length === 0}
+          className="btn clear-search"
+          type="button"
+          onClick={() => {
+            setSearchInputValue("");
+          }}
+        >
+          Clear
+        </button>
+      </div>
     </form>
   );
 };
