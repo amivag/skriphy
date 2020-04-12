@@ -50,14 +50,14 @@ function SkriphyApp() {
     } = clientStore.getDataFromLocal();
 
     if (localImageObjects) {
-      setApiResults(JSON.parse(localImageObjects));
+      setApiResults(localImageObjects);
       setAPILoadingStatus(API_STATUS.SUCCESS);
     }
     if (localSearchTerm) {
       setSearchInputValue(localSearchTerm);
     }
     if (localHiddenImageIds) {
-      setApiResultsHiddenIds(JSON.parse(localHiddenImageIds));
+      setApiResultsHiddenIds(localHiddenImageIds);
     }
     if (localGiphyAPIKey) {
       setGiphyAPIKey(localGiphyAPIKey);
@@ -103,7 +103,8 @@ function SkriphyApp() {
 
   return (
     <div className="SkriphyApp">
-      <header className="App-header">
+      <div className="top"></div>
+      <header>
         <h1 className="title">skriphy</h1>
       </header>
       <main>
@@ -156,8 +157,10 @@ function SkriphyApp() {
         </section>
       </main>
       <footer>
-        <div>GIPHY search by Vangelis Erotokritakis (April 2020)</div>
-        <div>
+        <div className="info">
+          GIPHY search by Vangelis Erotokritakis (April 2020)
+        </div>
+        <div className="actions">
           <button type="button" className="btn reset-app" onClick={resetApp}>
             Reset Everything!
           </button>
