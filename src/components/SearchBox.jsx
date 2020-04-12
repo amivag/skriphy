@@ -1,5 +1,7 @@
 import React from "react";
 
+import { IconSVGSearch, IconSVGClear } from "./Icons";
+
 const MIN_SEARCH_TERM_CHARS = 3;
 
 export const SearchBox = ({
@@ -41,7 +43,7 @@ export const SearchBox = ({
             }
           }}
         >
-          Go
+          <IconSVGSearch />
         </button>
         <button
           disabled={searchInputValue.length === 0}
@@ -51,7 +53,7 @@ export const SearchBox = ({
             setSearchInputValue("");
           }}
         >
-          Clear
+          <IconSVGClear />
         </button>
       </div>
     </form>

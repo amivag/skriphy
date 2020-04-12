@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import { copyTextToClipboard } from "../libs/clipboard.js";
 import { extractPropertiesFromAPIImageObject } from "../libs/giphy.js";
-
+import { IconSVGLink, IconSVGClear } from "./Icons";
 export const GIFGallery = ({
   giphyGalleryItems,
   hiddenItemIds,
@@ -72,7 +72,7 @@ const GIFImageItem = ({
             copyTextToClipboard(url);
           }}
         >
-          C
+          <IconSVGLink />
         </button>
         <button
           title="Remove image"
@@ -82,7 +82,7 @@ const GIFImageItem = ({
             removeItemById(itemId);
           }}
         >
-          &times;
+          <IconSVGClear />
         </button>
       </div>
     </li>
