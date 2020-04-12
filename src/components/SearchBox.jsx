@@ -1,12 +1,16 @@
 import React from "react";
 
+const MIN_SEARCH_TERM_CHARS = 3;
+
 export const SearchBox = ({
   searchInputValue,
   setSearchInputValue,
-  searchTerm,
   setSearchTerm,
   setSearchLastPerformedTimestamp,
 }) => {
+  const isSearchActionAllowed =
+    searchInputValue.length > 0 &&
+    searchInputValue.length >= MIN_SEARCH_TERM_CHARS;
   return (
     <form className="giphy-search-form">
       <label>
@@ -23,13 +27,13 @@ export const SearchBox = ({
         />
       </label>
       <button
+        disabled={!isSearchActionAllowed}
         className="btn submit"
         type="submit"
         onClick={(e) => {
           e.preventDefault();
-          console.log("Submit!");
           setSearchTerm("");
-          if (searchInputValue.length > 0) {
+          if (isSearchActionAllowed) {
             setSearchTerm(searchInputValue);
             setSearchLastPerformedTimestamp(Date.now());
           } else {
