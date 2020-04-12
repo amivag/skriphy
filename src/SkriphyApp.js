@@ -61,10 +61,9 @@ function SkriphyApp() {
       const artificialDelayMilliseconds = 1000; // for simulating slower network
       setTimeout(function () {
         // https://developers.giphy.com/docs/api/endpoint/#search
-        const result = axios(
-          `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPIKey}&q=${searchTerm}`
-        );
-        result
+        const searchURL = `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPIKey}&q=${searchTerm}`;
+        const searchResult = axios(searchURL);
+        searchResult
           .then((results) => {
             const imagesData = results?.data?.data;
             if (!imagesData) {
