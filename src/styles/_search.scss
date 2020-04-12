@@ -1,3 +1,9 @@
+section.giphy-search {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
 .giphy-search-form {
     font-size: 1.1em;
 
@@ -23,7 +29,8 @@
     .search-input-label {
         margin-right: .2em;
         display: inline-block;
-        width: 60%;
+        width: 64%;
+        max-width: 20em;
     }
 
     .search-input {
