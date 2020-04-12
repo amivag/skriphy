@@ -13,13 +13,15 @@ const API_STATUS = {
   ERROR: "error",
 };
 
-let giphyAPIKey = "xIuBoWebXJkrn7kaq9jWPrZk6u6prPPy";
+let giphyAPIKey = "xIuBoWebXJkrn7kaq9jWPrZk6u6prPPy"; //TODO: Make dynamic
 
 function getDataFromLocal() {
+  const localGiphyAPIKey = localStorage.getItem("giphyAPIKey");
   const localImageObjects = localStorage.getItem("imageObjects");
   const localHiddenImageIds = localStorage.getItem("hiddenImageIds");
   const localSearchTerm = localStorage.getItem("searchTerm");
   return {
+    localGiphyAPIKey,
     localImageObjects,
     localHiddenImageIds,
     localSearchTerm,
@@ -112,20 +114,25 @@ function SkriphyApp() {
           />
         </section>
         <section className="search-results">
+          {apiLoadingStatus === API_STATUS.IDLE && (
+            <div className="state-idle">
+              <span>Search for something...</span>
+            </div>
+          )}
           {apiLoadingStatus === API_STATUS.LOADING && (
-            <div className="loading">
-              <span>SEARCHING...</span>
+            <div className="state-loading">
+              <span>Seasching...</span>
             </div>
           )}
           {apiLoadingStatus === API_STATUS.ERROR && (
-            <div className="error">
+            <div className="state-error">
               <span>
                 Oops... there was an error with your request, maybe try again?
               </span>
             </div>
           )}
           {apiLoadingStatus === API_STATUS.SUCCESS && (
-            <Fragment>
+            <div className="state-success">
               <h2 className="title">
                 Results for '{searchTerm}' ({apiResults.length})
               </h2>
@@ -142,7 +149,7 @@ function SkriphyApp() {
                   );
                 }}
               />
-            </Fragment>
+            </div>
           )}
         </section>
       </main>
