@@ -78,8 +78,8 @@ function SkriphyApp() {
         const searchURL = giphy.getSearchURL(giphyAPIKey, searchTerm);
         const searchResult = axios(searchURL);
         searchResult
-          .then((results) => {
-            const imagesData = results?.data?.data;
+          .then((response) => {
+            const imagesData = giphy.extractImagesObjectFromAPISearch(response);
             if (!imagesData) {
               // error in received data
             }

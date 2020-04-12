@@ -1,3 +1,7 @@
+/**
+ * Handles the GIPHY API, by translating the response to Javascript data.
+ */
+
 import PropTypes from "prop-types";
 /**
  * Extract useful properties from a GIF image object (GIPHY API).
@@ -9,6 +13,11 @@ export function extractPropertiesFromAPIImageObject(giphyImageObject) {
     itemId: giphyImageObject?.id,
     urlGIFPreview: giphyImageObject?.images?.preview_gif?.url,
   };
+}
+
+export function extractImagesObjectFromAPISearch(searchAPIData) {
+  const imagesData = searchAPIData?.data?.data;
+  return imagesData;
 }
 
 export function getSearchURL(apiKey, searchTerm) {
