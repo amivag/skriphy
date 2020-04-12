@@ -126,51 +126,59 @@ function SkriphyApp() {
             Please fill in your GIPHY API key!
           </section>
         )}
-        {isAPIKeyEntered && <Fragment>
-        <section className="search-results">
-          {apiLoadingStatus === API_STATUS.IDLE && (
-            <div className="state-idle">
-              <span>Search for something...</span>
-            </div>
-          )}
-          {apiLoadingStatus === API_STATUS.LOADING && (
-            <div className="state-loading">
-              <span className="loader">Searching...</span>
-            </div>
-          )}
-          {apiLoadingStatus === API_STATUS.ERROR && (
-            <div className="state-error">
-              <div>
-                Oops... there was an error with your request, maybe try again?
-              </div>
-              <div>{errorMessage}</div>
-            </div>
-          )}
-          {apiLoadingStatus === API_STATUS.SUCCESS && (
-            <div className="state-success">
-              <h2 className="title">
-                Results for '{searchTerm}' ({apiResults.length})
-              </h2>
-              <GIFGallery
-                giphyGalleryItems={apiResults}
-                hiddenItemIds={apiResultsHiddenIds}
-                removeItemById={(itemId) => {
-                  const updatedHiddenIds = [...apiResultsHiddenIds, itemId];
-                  setApiResultsHiddenIds(updatedHiddenIds);
-                  clientStore.saveHiddenImageIds(updatedHiddenIds);
-                }}
-              />
-            </div>
-          )}
-        </section>
-        </Fragment>}
+        {isAPIKeyEntered && (
+          <Fragment>
+            <section className="search-results">
+              {apiLoadingStatus === API_STATUS.IDLE && (
+                <div className="state-idle">
+                  <span>Search for something...</span>
+                </div>
+              )}
+              {apiLoadingStatus === API_STATUS.LOADING && (
+                <div className="state-loading">
+                  <span className="loader">Searching...</span>
+                </div>
+              )}
+              {apiLoadingStatus === API_STATUS.ERROR && (
+                <div className="state-error">
+                  <div>
+                    Oops... there was an error with your request, maybe try
+                    again?
+                  </div>
+                  <div>{errorMessage}</div>
+                </div>
+              )}
+              {apiLoadingStatus === API_STATUS.SUCCESS && (
+                <div className="state-success">
+                  <h2 className="title">
+                    Results for '{searchTerm}' ({apiResults.length})
+                  </h2>
+                  <GIFGallery
+                    giphyGalleryItems={apiResults}
+                    hiddenItemIds={apiResultsHiddenIds}
+                    removeItemById={(itemId) => {
+                      const updatedHiddenIds = [...apiResultsHiddenIds, itemId];
+                      setApiResultsHiddenIds(updatedHiddenIds);
+                      clientStore.saveHiddenImageIds(updatedHiddenIds);
+                    }}
+                  />
+                </div>
+              )}
+            </section>
+          </Fragment>
+        )}
       </main>
       <footer>
         <div className="actions">
-          <button type="button" className="btn reset-app" onClick={resetApp}>
+          <button
+            type="button"
+            className="btn reset-app"
+            title="Reset all app data (except your API key)"
+            onClick={resetApp}
+          >
             Reset Everything!
           </button>
-          <label>
+          <label className="api-key-label">
             GIPHY API Key:{" "}
             <input
               className="apikey-input"
@@ -186,7 +194,6 @@ function SkriphyApp() {
             />
           </label>
         </div>
-        <hr />
         <div className="info">
           GIPHY search by Vangelis Erotokritakis (April 2020)
         </div>

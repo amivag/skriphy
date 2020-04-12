@@ -65,10 +65,29 @@ button {
   border-top: 1px solid #ccc;
 }
 
-.SkriphyApp .search-results .title {
+.SkriphyApp section.search-results {
+  min-height: 4em;
+}
+
+.SkriphyApp section.search-results .title {
   font-size: 1.2em;
   color: #888;
   margin: .5em;
+}
+
+.SkriphyApp .btn.reset-app {
+  font-size: 1.1em;
+  display: block;
+  text-align: center;
+  margin: .5em auto;
+  border: 1px solid red;
+  background: none;
+  color: red;
+  opacity: .7;
+}
+
+.SkriphyApp .btn.reset-app:hover {
+  opacity: 1;
 }
 
 .SkriphyApp .giphy-search-form {

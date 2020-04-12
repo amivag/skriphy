@@ -24,9 +24,9 @@ export const GIFGallery = ({
           } = extractPropertiesFromAPIImageObject(giphyImageObject);
 
           const isItemIdHidden = hiddenItemIds.indexOf(itemId) >= 0;
-
-          if (!isItemIdHidden) {
-            return (
+          if (isItemIdHidden) 
+            return null 
+          else return (
               <GIFImageItem
                 key={itemId}
                 {...{
@@ -40,7 +40,7 @@ export const GIFGallery = ({
                 }}
               />
             );
-          }
+
         })}
       </ul>
     );
