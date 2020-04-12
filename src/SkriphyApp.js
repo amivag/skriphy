@@ -4,12 +4,7 @@ import axios from "axios";
 import { GIFGallery } from "./components/GIFGallery.jsx";
 import { SearchBox } from "./components/SearchBox.jsx";
 
-import {
-  getDataFromLocal,
-  saveNewSearchDataToLocal,
-  saveHiddenImageIds,
-  resetLocalDataExceptAPIKey,
-} from "./libs/clientStore";
+import * as clientStore from "./libs/clientStore";
 
 import "./styles/SkriphyApp.css";
 
@@ -20,7 +15,7 @@ const API_STATUS = {
   ERROR: "error",
 };
 
-let giphyAPIKey = "xIuBoWebXJkrn7kaq9jWPrZk6u6prPPy"; //TODO: Make dynamic
+//let myGIPHYAPIKey = "xIuBoWebXJkrn7kaq9jWPrZk6u6prPPy";
 
 function SkriphyApp() {
   const [searchInputValue, setSearchInputValue] = useState("");
@@ -34,9 +29,11 @@ function SkriphyApp() {
   const [apiResults, setApiResults] = useState([]);
   const [apiResultsHiddenIds, setApiResultsHiddenIds] = useState([]);
   const [apiLoadingStatus, setAPILoadingStatus] = useState(API_STATUS.IDLE);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [giphyAPIKey, setGiphyAPIKey] = useState("");
 
   const resetApp = () => {
-    resetLocalDataExceptAPIKey();
+    clientStore.resetLocalDataExceptAPIKey();
     setSearchInputValue("");
     setApiResults([]);
     setApiResultsHiddenIds([]);
@@ -45,10 +42,11 @@ function SkriphyApp() {
 
   useEffect(() => {
     const {
+      localGiphyAPIKey,
       localImageObjects,
       localHiddenImageIds,
       localSearchTerm,
-    } = getDataFromLocal();
+    } = clientStore.getDataFromLocal();
 
     if (localImageObjects) {
       setApiResults(JSON.parse(localImageObjects));
@@ -60,6 +58,9 @@ function SkriphyApp() {
     if (localHiddenImageIds) {
       setApiResultsHiddenIds(JSON.parse(localHiddenImageIds));
     }
+    if (localGiphyAPIKey) {
+      setGiphyAPIKey(localGiphyAPIKey);
+    }
   }, []);
 
   useEffect(() => {
@@ -67,7 +68,7 @@ function SkriphyApp() {
       setAPILoadingStatus(API_STATUS.LOADING);
       setApiResultsHiddenIds([]);
 
-      const artificialDelayMilliseconds = 1000; // for simulating slower network
+      const artificialDelayMilliseconds = 1200; // for simulating slower network
       setTimeout(function () {
         // https://developers.giphy.com/docs/api/endpoint/#search
         const searchURL = `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPIKey}&q=${searchTerm}`;
@@ -78,18 +79,17 @@ function SkriphyApp() {
             if (!imagesData) {
               // error in received data
             }
-            saveNewSearchDataToLocal({
+            clientStore.saveNewSearchDataToLocal({
               searchTerm,
               imageObjects: imagesData,
             });
             setAPILoadingStatus(API_STATUS.SUCCESS);
             setApiResults(imagesData);
           })
-          .catch((e) => {
+          .catch((errorMsg) => {
             setAPILoadingStatus(API_STATUS.ERROR);
-            const errorMsg = `Error: ${e}`;
-            window.alert(errorMsg); // TODO: useState
-            //console.log(errorMsg);
+            setErrorMessage(errorMsg);
+            //window.alert(errorMsg);
           });
       }, artificialDelayMilliseconds);
     }
@@ -120,14 +120,15 @@ function SkriphyApp() {
           )}
           {apiLoadingStatus === API_STATUS.LOADING && (
             <div className="state-loading">
-              <span>Searching...</span>
+              <span className="loader">Searching...</span>
             </div>
           )}
           {apiLoadingStatus === API_STATUS.ERROR && (
             <div className="state-error">
-              <span>
+              <div>
                 Oops... there was an error with your request, maybe try again?
-              </span>
+              </div>
+              <div>{errorMessage}</div>
             </div>
           )}
           {apiLoadingStatus === API_STATUS.SUCCESS && (
@@ -141,7 +142,7 @@ function SkriphyApp() {
                 removeItemById={(itemId) => {
                   const updatedHiddenIds = [...apiResultsHiddenIds, itemId];
                   setApiResultsHiddenIds(updatedHiddenIds);
-                  saveHiddenImageIds(updatedHiddenIds);
+                  clientStore.saveHiddenImageIds(updatedHiddenIds);
                 }}
               />
             </div>
@@ -149,10 +150,27 @@ function SkriphyApp() {
         </section>
       </main>
       <footer>
-        GIPHY search by Vangelis Erotokritakis (April 2020) |{" "}
-        <button type="button" className="btn reset-app" onClick={resetApp}>
-          Reset Everything!
-        </button>
+        <div>GIPHY search by Vangelis Erotokritakis (April 2020)</div>
+        <div>
+          <button type="button" className="btn reset-app" onClick={resetApp}>
+            Reset Everything!
+          </button>
+          <label>
+            GIPHY API Key:{" "}
+            <input
+              className="apikey-input"
+              type="text"
+              name="apiKeyInput"
+              placeholder="Insert your key..."
+              value={giphyAPIKey}
+              onChange={(e) => {
+                const val = e.target.value;
+                clientStore.saveAPIKey(val);
+                setGiphyAPIKey(val);
+              }}
+            />
+          </label>
+        </div>
       </footer>
     </div>
   );
