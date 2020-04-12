@@ -2,18 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { copyTextToClipboard } from "../libs/clipboard.js";
-
-/**
- * Extract useful properties from a GIF image object (GIPHY API).
- * // https://developers.giphy.com/docs/api/schema
- * @param {*} giphyImageObject
- */
-function extractGiphyItemProperties(giphyImageObject) {
-  return {
-    itemId: giphyImageObject?.id,
-    urlGIFPreview: giphyImageObject?.images?.preview_gif?.url,
-  };
-}
+import { extractPropertiesFromAPIImageObject } from "../libs/giphy.js";
 
 export const GIFGallery = ({
   giphyGalleryItems,
@@ -25,7 +14,7 @@ export const GIFGallery = ({
     return (
       <ul className="items-list">
         {giphyGalleryItems.map((giphyImageObject) => {
-          const { itemId, urlGIFPreview } = extractGiphyItemProperties(
+          const { itemId, urlGIFPreview } = extractPropertiesFromAPIImageObject(
             giphyImageObject
           );
 
