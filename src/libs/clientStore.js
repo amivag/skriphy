@@ -35,6 +35,10 @@ export function saveHiddenImageIds(updatedHiddenImageIds) {
   );
 }
 
+export function saveAPIKey(APIKey) {
+  localStorage.setItem(STORAGE_KEY.GIPHY_API_KEY, APIKey);
+}
+
 export function resetLocalDataExceptAPIKey() {
   localStorage.setItem(STORAGE_KEY.IMAGE_OBJECTS, "");
   localStorage.setItem(STORAGE_KEY.SEARCH_TERM, "");
