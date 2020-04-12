@@ -102,9 +102,10 @@ function SkriphyApp() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchLastPerformedTimestamp]);
 
+  const isAPIKeyEntered = giphyAPIKey.length > 8;
+
   return (
     <div className="SkriphyApp">
-      {/* <div className="top"></div> */}
       <header>
         <h1 className="title">skriphy</h1>
       </header>
@@ -120,6 +121,12 @@ function SkriphyApp() {
             }}
           />
         </section>
+        {!isAPIKeyEntered && (
+          <section className="notice warning">
+            Please fill in your GIPHY API key!
+          </section>
+        )}
+        {isAPIKeyEntered && <Fragment>
         <section className="search-results">
           {apiLoadingStatus === API_STATUS.IDLE && (
             <div className="state-idle">
@@ -156,6 +163,7 @@ function SkriphyApp() {
             </div>
           )}
         </section>
+        </Fragment>}
       </main>
       <footer>
         <div className="actions">

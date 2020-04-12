@@ -32,6 +32,10 @@
     background: #fff;
     border: 1px solid #ccc;
 
+    min-height: 4em;
+    overflow: hidden;
+
+
     .img {
         width: 100%;
         height: auto;
@@ -72,7 +76,10 @@
     }
 
     .items-list>.image-item {
+        border: none;
+
         .controls {
+            display: none;
             position: absolute;
             font-size: 0.8em;
             top: 0;
@@ -82,6 +89,12 @@
                 font-size: 1em;
                 padding: 0.3em;
             }
+        }
+    }
+
+    .items-list>.image-item:hover {
+        .controls {
+            display: block;
         }
     }
 }

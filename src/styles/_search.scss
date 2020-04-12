@@ -1,0 +1,47 @@
+.giphy-search-form {
+    font-size: 1.1em;
+
+    .search-actions {
+        display: inline-block;
+
+        .icon {
+            width: 1.1em;
+            height: 1.1em;
+        }
+    }
+
+    .search-input,
+    .btn {
+        background: none;
+        border: 1px solid #ccc;
+        height: 2em;
+        vertical-align: top;
+        margin-right: .2em;
+        margin-top: .2em;
+    }
+
+    .search-input:hover,
+    .btn:hover {
+        border-color: #bbb;
+        background: #fff;
+    }
+
+
+    .search-input-label {
+        margin-right: .2em;
+        display: inline-block;
+        width: 60%;
+    }
+
+    .search-input {
+        font-weight: normal;
+        padding: .2em;
+        width: 100%;
+    }
+
+    .search-input:focus {
+        font-weight: bold;
+        border-color: #000;
+    }
+
+}

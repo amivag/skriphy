@@ -62,7 +62,12 @@ const GIFImageItem = ({
 }) => {
   return (
     <li className="image-item">
-      <img className="img" src={urlGIFFixedWidth} alt={urlGIFFixedWidth} />
+      <img
+        className="img"
+        src={urlGIFFixedWidth}
+        alt={urlGIFFixedWidth}
+        loading="lazy"
+      />
       <div className="controls">
         <button
           title="Copy link to clipboard"

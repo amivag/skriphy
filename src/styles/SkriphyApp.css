@@ -1,3 +1,11 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 320px;
+}
+
 html {
   margin: 0;
   padding: 0;
@@ -25,6 +33,16 @@ body {
           box-sizing: border-box;
 }
 
+input,
+button {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
 .SkriphyApp {
   text-align: center;
   font-size: 1em;
@@ -47,14 +65,56 @@ body {
   border-top: 1px solid #ccc;
 }
 
-.SkriphyApp input,
-.SkriphyApp button {
-  font-size: inherit;
-  line-height: inherit;
+.SkriphyApp .search-results .title {
+  font-size: 1.2em;
+  color: #888;
+  margin: .5em;
 }
 
-.SkriphyApp button {
-  cursor: pointer;
+.SkriphyApp .giphy-search-form {
+  font-size: 1.1em;
+}
+
+.SkriphyApp .giphy-search-form .search-actions {
+  display: inline-block;
+}
+
+.SkriphyApp .giphy-search-form .search-actions .icon {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.SkriphyApp .giphy-search-form .search-input,
+.SkriphyApp .giphy-search-form .btn {
+  background: none;
+  border: 1px solid #ccc;
+  height: 2em;
+  vertical-align: top;
+  margin-right: .2em;
+  margin-top: .2em;
+}
+
+.SkriphyApp .giphy-search-form .search-input:hover,
+.SkriphyApp .giphy-search-form .btn:hover {
+  border-color: #bbb;
+  background: #fff;
+}
+
+.SkriphyApp .giphy-search-form .search-input-label {
+  margin-right: .2em;
+  display: inline-block;
+  width: 60%;
+}
+
+.SkriphyApp .giphy-search-form .search-input {
+  font-weight: normal;
+  padding: .2em;
+  width: 100%;
+}
+
+.SkriphyApp .giphy-search-form .search-input:focus {
+  font-weight: bold;
+  border-color: #000;
 }
 
 .SkriphyApp .items-list {
@@ -82,6 +142,8 @@ body {
   position: relative;
   background: #fff;
   border: 1px solid #ccc;
+  min-height: 4em;
+  overflow: hidden;
 }
 
 .SkriphyApp .items-list > .image-item .img {
@@ -118,7 +180,11 @@ body {
     -webkit-column-count: 6;
             column-count: 6;
   }
+  .SkriphyApp .items-list > .image-item {
+    border: none;
+  }
   .SkriphyApp .items-list > .image-item .controls {
+    display: none;
     position: absolute;
     font-size: 0.8em;
     top: 0;
@@ -127,6 +193,9 @@ body {
   .SkriphyApp .items-list > .image-item .controls .btn {
     font-size: 1em;
     padding: 0.3em;
+  }
+  .SkriphyApp .items-list > .image-item:hover .controls {
+    display: block;
   }
 }
 

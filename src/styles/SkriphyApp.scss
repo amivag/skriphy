@@ -23,22 +23,20 @@ $desktop-min-width: 641px;
         border-top: 1px solid #ccc;
     }
 
-    input,
-    button {
-        font-size: inherit;
-        line-height: inherit;
-	}
-	button {
-		cursor: pointer;
-	}
 
+    .search-results .title {
+        font-size: 1.2em;
+        color: #888;
+        margin: .5em;
+    }
 
+    @import "search";
     @import "items-list";
 }
 
 @media screen and (min-width: $desktop-min-width) {
     .SkriphyApp {
         text-align: center;
-        //background: yellow;
+        //background: yellow; // for testing
     }
 }

@@ -1,9 +1,17 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-width: 320px;
+    min-height: 320px;
+}
+
 html {
     margin: 0;
     padding: 0;
     width: 100%;
     overflow-x: hidden;
-    //background: yellow;
+    //background: yellow; // testing
 }
 
 body {
@@ -28,4 +36,14 @@ body {
 *:before,
 *:after {
     box-sizing: border-box;
+}
+
+input,
+button {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+button {
+    cursor: pointer;
 }
