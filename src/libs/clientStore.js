@@ -5,6 +5,7 @@ const STORAGE_KEY = {
   IMAGE_OBJECTS: "imageObjects",
   HIDDEN_IMAGE_IDS: "hiddenImageIds",
   SEARCH_TERM: "searchTerm",
+  APP_THEME: "appTheme",
 };
 
 export function getDataFromLocal() {
@@ -23,11 +24,15 @@ export function getDataFromLocal() {
     ? JSON.parse(localHiddenImageIdsStringified)
     : [];
   const localSearchTerm = localStorage.getItem(STORAGE_KEY.SEARCH_TERM) ?? "";
+
+  const localAppTheme = localStorage.getItem(STORAGE_KEY.APP_THEME) ?? "";
+
   return {
     localGiphyAPIKey,
     localImageObjects,
     localHiddenImageIds,
     localSearchTerm,
+    localAppTheme
   };
 }
 
@@ -46,6 +51,10 @@ export function saveHiddenImageIds(updatedHiddenImageIds) {
 
 export function saveAPIKey(APIKey) {
   localStorage.setItem(STORAGE_KEY.GIPHY_API_KEY, APIKey);
+}
+
+export function saveAppTheme(appTheme) {
+  localStorage.setItem(STORAGE_KEY.APP_THEME, appTheme);
 }
 
 export function resetLocalDataExceptAPIKey() {

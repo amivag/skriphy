@@ -1,12 +1,20 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 
-import { GIFGallery } from "./components/GIFGallery";
 import { SearchBox } from "./components/SearchBox";
-import { IconSVGLoader } from "./components/Icons";
 
 import * as giphy from "./libs/giphy.js";
 import * as clientStore from "./libs/clientStore";
+
+import {
+  SectionStateIdle,
+  SectionAPIKeyWarning,
+  SectionAPIError,
+  SectionAPILoading,
+  SectionHeader,
+  SectionFooter,
+  SectionGallery,
+} from "./components/UISections";
 
 import "./styles/SkriphyApp.css";
 
@@ -17,9 +25,15 @@ const API_STATUS = {
   ERROR: "error",
 };
 
+const APP_THEME = {
+  LIGHT: "light",
+  DARK: "dark",
+};
+
 //let myGIPHYAPIKey = "xIuBoWebXJkrn7kaq9jWPrZk6u6prPPy";
 
 function SkriphyApp() {
+  const [appTheme, setAppTheme] = useState(APP_THEME.LIGHT);
   const [searchInputValue, setSearchInputValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   // We use a "search last performed" timestamp, to be able to trigger useEffect
@@ -40,6 +54,7 @@ function SkriphyApp() {
     setApiResults([]);
     setApiResultsHiddenIds([]);
     setAPILoadingStatus(API_STATUS.IDLE);
+    setAppTheme(APP_THEME.LIGHT);
   };
 
   useEffect(() => {
@@ -48,6 +63,7 @@ function SkriphyApp() {
       localImageObjects,
       localHiddenImageIds,
       localSearchTerm,
+      localAppTheme,
     } = clientStore.getDataFromLocal();
 
     if (localImageObjects) {
@@ -63,6 +79,9 @@ function SkriphyApp() {
     }
     if (localGiphyAPIKey) {
       setGiphyAPIKey(localGiphyAPIKey);
+    }
+    if (localAppTheme) {
+      setAppTheme(localAppTheme);
     }
 
     document.title =
@@ -83,7 +102,7 @@ function SkriphyApp() {
           .then((response) => {
             const imagesData = giphy.extractImagesObjectFromAPISearch(response);
             if (!imagesData) {
-              // error in received data
+              // error in received data, not in the expected format
             }
             clientStore.saveNewSearchDataToLocal({
               searchTerm,
@@ -105,10 +124,25 @@ function SkriphyApp() {
 
   const removeItemById = (itemId) => {
     const updatedHiddenIds = [...apiResultsHiddenIds, itemId];
-    const updatedHiddenIdsUniqueSet = new Set(updatedHiddenIds);
-    const updatedHiddenIdsUnique = [...updatedHiddenIdsUniqueSet];
+    const updatedHiddenIdsUniqueSet = new Set(updatedHiddenIds); // remove duplicates (Set)
+    const updatedHiddenIdsUnique = [...updatedHiddenIdsUniqueSet]; // back in Array
     setApiResultsHiddenIds(updatedHiddenIdsUnique);
     clientStore.saveHiddenImageIds(updatedHiddenIdsUnique);
+  };
+
+  const toggleAppTheme = () => {
+    if (appTheme === APP_THEME.LIGHT) {
+      setAppTheme(APP_THEME.DARK);
+      clientStore.saveAppTheme(APP_THEME.DARK);
+    } else {
+      setAppTheme(APP_THEME.LIGHT);
+      clientStore.saveAppTheme(APP_THEME.LIGHT);
+    }
+  };
+
+  const setAPIKey = (apiKey) => {
+    clientStore.saveAPIKey(apiKey);
+    setGiphyAPIKey(apiKey);
   };
 
   const isAPIKeyEntered = giphyAPIKey.length > 8;
@@ -117,100 +151,49 @@ function SkriphyApp() {
     apiResults.length - apiResultsHiddenIds.length;
 
   return (
-    <div className="SkriphyApp">
-      <header>
-        <h1 className="title">skriphy</h1>
-      </header>
+    <div className={`SkriphyApp ${appTheme}`}>
+      <SectionHeader />
       <main>
-        <section className="giphy-search">
-          <SearchBox
-            {...{
-              searchInputValue,
-              setSearchInputValue,
-              searchTerm,
-              setSearchTerm,
-              setSearchLastPerformedTimestamp,
-            }}
-          />
-        </section>
-        {!isAPIKeyEntered && (
-          <section className="notice warning">
-            Please fill in your GIPHY API key!
+        {isAPIKeyEntered && (
+          <section className="giphy-search">
+            <SearchBox
+              {...{
+                searchInputValue,
+                setSearchInputValue,
+                searchTerm,
+                setSearchTerm,
+                setSearchLastPerformedTimestamp,
+              }}
+            />
           </section>
         )}
+        {!isAPIKeyEntered && <SectionAPIKeyWarning />}
         {isAPIKeyEntered && (
           <Fragment>
             <section className="search-results">
-              {apiLoadingStatus === API_STATUS.IDLE && (
-                <div className="state-idle">
-                  <span>Search for something...</span>
-                </div>
-              )}
-              {apiLoadingStatus === API_STATUS.LOADING && (
-                <div className="state-loading">
-                  <div className="loader">Searching...</div>
-                  <div>
-                    <IconSVGLoader />
-                  </div>
-                </div>
-              )}
+              {apiLoadingStatus === API_STATUS.IDLE && <SectionStateIdle />}
+              {apiLoadingStatus === API_STATUS.LOADING && <SectionAPILoading />}
               {apiLoadingStatus === API_STATUS.ERROR && (
-                <div className="state-error">
-                  <div>
-                    Oops... there was an error with your request, maybe try
-                    again?
-                  </div>
-                  <div>{errorMessage}</div>
-                </div>
+                <SectionAPIError errorMessage={errorMessage} />
               )}
               {apiLoadingStatus === API_STATUS.SUCCESS && (
-                <div className="state-success">
-                  {searchTerm.length > 0 && (
-                    <h2 className="title">
-                      Results for '{searchTerm}' ({visibleSearchResultsCount})
-                    </h2>
-                  )}
-                  <GIFGallery
-                    giphyGalleryItems={apiResults}
-                    hiddenItemIds={apiResultsHiddenIds}
-                    removeItemById={removeItemById}
-                  />
-                </div>
+                <SectionGallery
+                  {...{
+                    searchTerm,
+                    visibleSearchResultsCount,
+                    apiResults,
+                    apiResultsHiddenIds,
+                    removeItemById,
+                  }}
+                />
               )}
             </section>
           </Fragment>
         )}
       </main>
-      <footer>
-        <div className="actions">
-          <button
-            type="button"
-            className="btn reset-app"
-            title="Reset all app data (except your API key)"
-            onClick={resetApp}
-          >
-            Reset Everything!
-          </button>
-          <label className="api-key-label">
-            <span>GIPHY API Key: </span>
-            <input
-              className="apikey-input"
-              type="text"
-              name="apiKeyInput"
-              placeholder="Insert your key..."
-              value={giphyAPIKey}
-              onChange={(e) => {
-                const val = e.target.value;
-                clientStore.saveAPIKey(val);
-                setGiphyAPIKey(val);
-              }}
-            />
-          </label>
-        </div>
-        <div className="info">
-          GIPHY search by Vangelis Erotokritakis (April 2020)
-        </div>
-      </footer>
+      <SectionFooter
+        {...{ giphyAPIKey, setAPIKey, resetApp, toggleAppTheme }}
+      />
     </div>
   );
 }

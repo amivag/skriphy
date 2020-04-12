@@ -1,0 +1,53 @@
+.SkriphyApp.light {
+    background: #f5f5f5;
+    color: #333;
+
+    .items-list {
+        background: #f0f0f0;
+    }
+
+    .giphy-search-form {
+
+        .search-input,
+        .btn {
+            background: #fff;
+
+        }
+
+        .search-input:hover,
+        .btn:hover {
+            border-color: #bbb;
+            background: #fff;
+        }
+    }
+}
+
+
+.SkriphyApp.dark {
+    background: #000;
+    color: #eee;
+
+    .items-list {
+        background: #333;
+    }
+
+    .giphy-search-form {
+
+        .search-input,
+        .btn {
+            border-color: #777;
+            background: #333;
+            color: #fafafa;
+            fill: #fafafa;
+        }
+
+        .search-input:hover,
+        .btn:hover {
+            border-color: #bbb;
+            background: #555;
+        }
+
+    }
+
+
+}
