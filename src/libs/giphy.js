@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 /**
  * Extract useful properties from a GIF image object (GIPHY API).
  * // https://developers.giphy.com/docs/api/schema
@@ -9,3 +10,12 @@ export function extractPropertiesFromAPIImageObject(giphyImageObject) {
     urlGIFPreview: giphyImageObject?.images?.preview_gif?.url,
   };
 }
+
+export function getSearchURL(apiKey, searchTerm) {
+  const searchURL = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchTerm}`;
+  return searchURL;
+}
+getSearchURL.propTypes = {
+  apiKey: PropTypes.string,
+  searchTerm: PropTypes.string,
+};
