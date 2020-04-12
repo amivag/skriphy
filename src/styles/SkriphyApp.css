@@ -1,10 +1,15 @@
-body {
-  font-size: 16px;
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-input,
-button {
-  font-size: 1em;
+body {
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .SkriphyApp {
@@ -12,18 +17,23 @@ button {
   font-size: 1em;
 }
 
-section {
-  padding: .5em;
+.SkriphyApp section {
+  padding: 0.5em;
 }
 
-footer {
-  padding: .5em;
-  font-size: .8em;
+.SkriphyApp footer {
+  padding: 0.5em;
+  font-size: 0.8em;
   color: #777;
   border-top: 1px solid #ccc;
 }
 
-.items-list {
+.SkriphyApp input,
+.SkriphyApp button {
+  font-size: 1em;
+}
+
+.SkriphyApp .items-list {
   background: #f0f0f0;
   min-height: 1em;
   list-style: none;
@@ -40,7 +50,7 @@ footer {
           align-items: center;
 }
 
-.items-list > .item {
+.SkriphyApp .items-list > .item {
   padding: .2em;
 }
 /*# sourceMappingURL=SkriphyApp.css.map */
