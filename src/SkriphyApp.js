@@ -8,6 +8,7 @@ import {
   getDataFromLocal,
   saveNewSearchDataToLocal,
   saveHiddenImageIds,
+  resetLocalDataExceptAPIKey,
 } from "./libs/clientStore";
 
 import "./styles/SkriphyApp.css";
@@ -24,8 +25,8 @@ let giphyAPIKey = "xIuBoWebXJkrn7kaq9jWPrZk6u6prPPy"; //TODO: Make dynamic
 function SkriphyApp() {
   const [searchInputValue, setSearchInputValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  // We use a "search last performed timestamp", to be able to trigger useEffect
-  //  multiple times on the same search term
+  // We use a "search last performed" timestamp, to be able to trigger useEffect
+  //  repeatedly on the same search term if wanted.
   const [
     searchLastPerformedTimestamp,
     setSearchLastPerformedTimestamp,
@@ -33,6 +34,14 @@ function SkriphyApp() {
   const [apiResults, setApiResults] = useState([]);
   const [apiResultsHiddenIds, setApiResultsHiddenIds] = useState([]);
   const [apiLoadingStatus, setAPILoadingStatus] = useState(API_STATUS.IDLE);
+
+  const resetApp = () => {
+    resetLocalDataExceptAPIKey();
+    setSearchInputValue("");
+    setApiResults([]);
+    setApiResultsHiddenIds([]);
+    setAPILoadingStatus(API_STATUS.IDLE);
+  };
 
   useEffect(() => {
     const {
@@ -111,7 +120,7 @@ function SkriphyApp() {
           )}
           {apiLoadingStatus === API_STATUS.LOADING && (
             <div className="state-loading">
-              <span>Seasching...</span>
+              <span>Searching...</span>
             </div>
           )}
           {apiLoadingStatus === API_STATUS.ERROR && (
@@ -139,7 +148,11 @@ function SkriphyApp() {
           )}
         </section>
       </main>
-      <footer>GIPHY search by Vangelis Erotokritakis (April 2020)</footer>
+      <footer>
+        GIPHY search by Vangelis Erotokritakis (April 2020) |{" "}
+        <button type="button" className="btn reset-app" onClick={resetApp}>
+          Reset Everything!
+      </footer>
     </div>
   );
 }

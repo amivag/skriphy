@@ -34,3 +34,9 @@ export function saveHiddenImageIds(updatedHiddenImageIds) {
     JSON.stringify(updatedHiddenImageIds)
   );
 }
+
+export function resetLocalDataExceptAPIKey() {
+  localStorage.setItem(STORAGE_KEY.IMAGE_OBJECTS, "");
+  localStorage.setItem(STORAGE_KEY.SEARCH_TERM, "");
+  localStorage.setItem(STORAGE_KEY.HIDDEN_IMAGE_IDS, "");
+}

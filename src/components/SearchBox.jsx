@@ -13,7 +13,7 @@ export const SearchBox = ({
     searchInputValue.length >= MIN_SEARCH_TERM_CHARS;
   return (
     <form className="giphy-search-form">
-      <label>
+      <label className="search-input-label">
         <input
           className="search-input"
           type="text"
@@ -26,33 +26,34 @@ export const SearchBox = ({
           }}
         />
       </label>
-      <button
-        disabled={!isSearchActionAllowed}
-        className="btn submit"
-        type="submit"
-        onClick={(e) => {
-          e.preventDefault();
-          setSearchTerm("");
-          if (isSearchActionAllowed) {
-            setSearchTerm(searchInputValue);
-            setSearchLastPerformedTimestamp(Date.now());
-          } else {
-            console.log("Search term too short!");
-          }
-        }}
-      >
-        Go
-      </button>
-      <button
-        className="btn clear-search"
-        type="button"
-        onClick={() => {
-          //setSearchTerm("");
-          setSearchInputValue("");
-        }}
-      >
-        Clear
-      </button>
+      <div className="search-actions">
+        <button
+          disabled={!isSearchActionAllowed}
+          className="btn submit"
+          type="submit"
+          onClick={(e) => {
+            e.preventDefault();
+            if (isSearchActionAllowed) {
+              setSearchTerm(searchInputValue);
+              setSearchLastPerformedTimestamp(Date.now());
+            } else {
+              console.log("Search term too short!");
+            }
+          }}
+        >
+          Go
+        </button>
+        <button
+          className="btn clear-search"
+          type="button"
+          onClick={() => {
+            //setSearchTerm("");
+            setSearchInputValue("");
+          }}
+        >
+          Clear
+        </button>
+      </div>
     </form>
   );
 };
