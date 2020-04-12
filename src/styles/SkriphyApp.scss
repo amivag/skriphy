@@ -25,8 +25,13 @@ $desktop-min-width: 641px;
 
     input,
     button {
-        font-size: 1em;
-    }
+        font-size: inherit;
+        line-height: inherit;
+	}
+	button {
+		cursor: pointer;
+	}
+
 
     @import "items-list";
 }

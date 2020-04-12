@@ -5,7 +5,7 @@
     min-height: 1em;
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: .2em;
 
     //   display: flex;
     //   flex-wrap: wrap;
@@ -26,36 +26,44 @@
 .items-list>.image-item {
     padding: 0;
     margin: 0.2em;
+    margin-bottom: .8em;
     position: relative;
 
-    //width: 100% !important;
-    //height: auto !important;
+    background: #fff;
+    border: 1px solid #ccc;
+
     .img {
         width: 100%;
         height: auto;
     }
 
     .controls {
-        opacity: 0.8;
-        position: absolute;
-        font-size: 0.8em;
-        top: 0;
-        right: 0;
 
         .btn {
             font-size: 1em;
             line-height: 1.1em;
             padding: 0.4em;
             border: none;
-            background: #f0f0f0;
-            color: #555;
+            background: rgba(255, 255, 255, .5);
+            color: #333;
             margin: 0.08em;
+
+            .icon {
+                width: 1.2em;
+                height: 1.2em;
+            }
         }
 
         .btn:hover {
             background: #fff;
         }
     }
+
+}
+
+.items-list>.image-item:hover .controls,
+.items-list>.image-item:active .controls {
+    display: block;
 }
 
 @media screen and (min-width: $desktop-min-width) {
@@ -65,17 +73,14 @@
 
     .items-list>.image-item {
         .controls {
-            display: none;
-        }
-    }
-
-    .items-list>.image-item:hover {
-        .controls {
-            display: block;
+            position: absolute;
+            font-size: 0.8em;
+            top: 0;
+            right: 0;
 
             .btn {
                 font-size: 1em;
-                padding: 0.5em;
+                padding: 0.3em;
             }
         }
     }
