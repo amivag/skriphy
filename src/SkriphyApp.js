@@ -1,9 +1,10 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 
-import { GIFGallery } from "./components/GIFGallery.jsx";
-import { SearchBox } from "./components/SearchBox.jsx";
+import { GIFGallery } from "./components/GIFGallery";
+import { SearchBox } from "./components/SearchBox";
 
+import * as giphy from "./libs/giphy.js";
 import * as clientStore from "./libs/clientStore";
 
 import "./styles/SkriphyApp.css";
@@ -49,18 +50,21 @@ function SkriphyApp() {
     } = clientStore.getDataFromLocal();
 
     if (localImageObjects) {
-      setApiResults(JSON.parse(localImageObjects));
+      setApiResults(localImageObjects);
       setAPILoadingStatus(API_STATUS.SUCCESS);
     }
     if (localSearchTerm) {
       setSearchInputValue(localSearchTerm);
     }
     if (localHiddenImageIds) {
-      setApiResultsHiddenIds(JSON.parse(localHiddenImageIds));
+      setApiResultsHiddenIds(localHiddenImageIds);
     }
     if (localGiphyAPIKey) {
       setGiphyAPIKey(localGiphyAPIKey);
     }
+
+    document.title =
+      "skriphy | ReactJS demo by Vangelis Erotokritakis (04/2020)";
   }, []);
 
   useEffect(() => {
@@ -71,11 +75,11 @@ function SkriphyApp() {
       const artificialDelayMilliseconds = 1200; // for simulating slower network
       setTimeout(function () {
         // https://developers.giphy.com/docs/api/endpoint/#search
-        const searchURL = `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPIKey}&q=${searchTerm}`;
+        const searchURL = giphy.getSearchURL(giphyAPIKey, searchTerm);
         const searchResult = axios(searchURL);
         searchResult
-          .then((results) => {
-            const imagesData = results?.data?.data;
+          .then((response) => {
+            const imagesData = giphy.extractImagesObjectFromAPISearch(response);
             if (!imagesData) {
               // error in received data
             }
@@ -93,11 +97,14 @@ function SkriphyApp() {
           });
       }, artificialDelayMilliseconds);
     }
+    // Line below is to stop complaining about missing dependencies...
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchLastPerformedTimestamp]);
 
   return (
     <div className="SkriphyApp">
-      <header className="App-header">
+      <div className="top"></div>
+      <header>
         <h1 className="title">skriphy</h1>
       </header>
       <main>
@@ -150,8 +157,10 @@ function SkriphyApp() {
         </section>
       </main>
       <footer>
-        <div>GIPHY search by Vangelis Erotokritakis (April 2020)</div>
-        <div>
+        <div className="info">
+          GIPHY search by Vangelis Erotokritakis (April 2020)
+        </div>
+        <div className="actions">
           <button type="button" className="btn reset-app" onClick={resetApp}>
             Reset Everything!
           </button>

@@ -1,4 +1,4 @@
-// Handle the data storage on the client
+// Handle the data storage on the client side (i.e. localStorage)
 
 const STORAGE_KEY = {
   GIPHY_API_KEY: "giphyAPIKey",
@@ -8,12 +8,21 @@ const STORAGE_KEY = {
 };
 
 export function getDataFromLocal() {
-  const localGiphyAPIKey = localStorage.getItem(STORAGE_KEY.GIPHY_API_KEY);
-  const localImageObjects = localStorage.getItem(STORAGE_KEY.IMAGE_OBJECTS);
-  const localHiddenImageIds = localStorage.getItem(
+  const localGiphyAPIKey =
+    localStorage.getItem(STORAGE_KEY.GIPHY_API_KEY) ?? "";
+  const localImageObjectsStringified = localStorage.getItem(
+    STORAGE_KEY.IMAGE_OBJECTS
+  );
+  const localImageObjects = localImageObjectsStringified
+    ? JSON.parse(localImageObjectsStringified)
+    : [];
+  const localHiddenImageIdsStringified = localStorage.getItem(
     STORAGE_KEY.HIDDEN_IMAGE_IDS
   );
-  const localSearchTerm = localStorage.getItem(STORAGE_KEY.SEARCH_TERM);
+  const localHiddenImageIds = localHiddenImageIdsStringified
+    ? JSON.parse(localHiddenImageIdsStringified)
+    : [];
+  const localSearchTerm = localStorage.getItem(STORAGE_KEY.SEARCH_TERM) ?? "";
   return {
     localGiphyAPIKey,
     localImageObjects,
@@ -25,7 +34,7 @@ export function getDataFromLocal() {
 export function saveNewSearchDataToLocal({ searchTerm, imageObjects }) {
   localStorage.setItem(STORAGE_KEY.IMAGE_OBJECTS, JSON.stringify(imageObjects));
   localStorage.setItem(STORAGE_KEY.SEARCH_TERM, searchTerm);
-  localStorage.setItem(STORAGE_KEY.HIDDEN_IMAGE_IDS, ""); // it's a new search, remove previous hidden data
+  localStorage.setItem(STORAGE_KEY.HIDDEN_IMAGE_IDS, ""); // it's a new search, remove previous hidden image data
 }
 
 export function saveHiddenImageIds(updatedHiddenImageIds) {
