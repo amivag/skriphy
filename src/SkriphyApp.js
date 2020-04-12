@@ -5,6 +5,7 @@ import { SearchBox } from "./components/SearchBox";
 
 import * as giphy from "./libs/giphy.js";
 import * as clientStore from "./libs/clientStore";
+import { API_STATUS, APP_THEME } from "./libs/appParams.js";
 
 import {
   SectionStateIdle,
@@ -17,18 +18,6 @@ import {
 } from "./components/UISections";
 
 import "./styles/SkriphyApp.css";
-
-const API_STATUS = {
-  LOADING: "loading",
-  IDLE: "idle",
-  SUCCESS: "success",
-  ERROR: "error",
-};
-
-const APP_THEME = {
-  LIGHT: "light",
-  DARK: "dark",
-};
 
 //let myGIPHYAPIKey = "xIuBoWebXJkrn7kaq9jWPrZk6u6prPPy";
 
