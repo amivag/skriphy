@@ -4,6 +4,12 @@ import axios from "axios";
 import { GIFGallery } from "./components/GIFGallery.jsx";
 import { SearchBox } from "./components/SearchBox.jsx";
 
+import {
+  getDataFromLocal,
+  saveNewSearchDataToLocal,
+  saveHiddenImageIds,
+} from "./libs/clientStore";
+
 import "./styles/SkriphyApp.css";
 
 const API_STATUS = {
@@ -14,19 +20,6 @@ const API_STATUS = {
 };
 
 let giphyAPIKey = "xIuBoWebXJkrn7kaq9jWPrZk6u6prPPy"; //TODO: Make dynamic
-
-function getDataFromLocal() {
-  const localGiphyAPIKey = localStorage.getItem("giphyAPIKey");
-  const localImageObjects = localStorage.getItem("imageObjects");
-  const localHiddenImageIds = localStorage.getItem("hiddenImageIds");
-  const localSearchTerm = localStorage.getItem("searchTerm");
-  return {
-    localGiphyAPIKey,
-    localImageObjects,
-    localHiddenImageIds,
-    localSearchTerm,
-  };
-}
 
 function SkriphyApp() {
   const [searchInputValue, setSearchInputValue] = useState("");
@@ -49,7 +42,6 @@ function SkriphyApp() {
     } = getDataFromLocal();
 
     if (localImageObjects) {
-      //console.log(localImageObjects);
       setApiResults(JSON.parse(localImageObjects));
       setAPILoadingStatus(API_STATUS.SUCCESS);
     }
@@ -66,10 +58,8 @@ function SkriphyApp() {
       setAPILoadingStatus(API_STATUS.LOADING);
       setApiResultsHiddenIds([]);
 
-      const artificialDelayMilliseconds = 1000;
+      const artificialDelayMilliseconds = 1000; // for simulating slower network
       setTimeout(function () {
-        //your code to be executed after 1 second
-
         // https://developers.giphy.com/docs/api/endpoint/#search
         const result = axios(
           `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPIKey}&q=${searchTerm}`
@@ -80,9 +70,10 @@ function SkriphyApp() {
             if (!imagesData) {
               // error in received data
             }
-            localStorage.setItem("imageObjects", JSON.stringify(imagesData));
-            localStorage.setItem("searchTerm", searchTerm);
-            localStorage.setItem("hiddenImageIds", "");
+            saveNewSearchDataToLocal({
+              searchTerm,
+              imageObjects: imagesData,
+            });
             setAPILoadingStatus(API_STATUS.SUCCESS);
             setApiResults(imagesData);
           })
@@ -140,13 +131,9 @@ function SkriphyApp() {
                 giphyGalleryItems={apiResults}
                 hiddenItemIds={apiResultsHiddenIds}
                 removeItemById={(itemId) => {
-                  //console.log(`Attempting to remove item id ${itemId}`);
                   const updatedHiddenIds = [...apiResultsHiddenIds, itemId];
                   setApiResultsHiddenIds(updatedHiddenIds);
-                  localStorage.setItem(
-                    "hiddenImageIds",
-                    JSON.stringify(updatedHiddenIds)
-                  );
+                  saveHiddenImageIds(updatedHiddenIds);
                 }}
               />
             </div>
