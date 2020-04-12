@@ -1,4 +1,5 @@
 .items-list {
+    animation: inherit;
     font-size: 1em;
     line-height: 1.2em;
     background: #f0f0f0;
@@ -24,6 +25,7 @@
 }
 
 .items-list>.image-item {
+    animation: fadein 250ms;
     padding: 0;
     margin: 0.2em;
     margin-bottom: .8em;
@@ -37,6 +39,7 @@
 
 
     .img {
+        animation: fadein 350ms;
         width: 100%;
         height: auto;
     }
@@ -96,5 +99,18 @@
         .controls {
             display: block;
         }
+    }
+}
+
+
+
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }

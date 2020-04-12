@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { GIFGallery } from "./components/GIFGallery";
 import { SearchBox } from "./components/SearchBox";
+import { IconSVGLoader } from "./components/Icons";
 
 import * as giphy from "./libs/giphy.js";
 import * as clientStore from "./libs/clientStore";
@@ -136,7 +137,10 @@ function SkriphyApp() {
               )}
               {apiLoadingStatus === API_STATUS.LOADING && (
                 <div className="state-loading">
-                  <span className="loader">Searching...</span>
+                  <div className="loader">Searching...</div>
+                  <div>
+                    <IconSVGLoader />
+                  </div>
                 </div>
               )}
               {apiLoadingStatus === API_STATUS.ERROR && (
@@ -179,7 +183,7 @@ function SkriphyApp() {
             Reset Everything!
           </button>
           <label className="api-key-label">
-            GIPHY API Key:{" "}
+            <span>GIPHY API Key: </span>
             <input
               className="apikey-input"
               type="text"

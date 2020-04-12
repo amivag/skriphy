@@ -3,6 +3,9 @@ $desktop-min-width: 641px;
 @import "basics";
 
 .SkriphyApp {
+
+    animation: fadein 250ms;
+
     text-align: center;
     font-size: 1em;
     display: block;
@@ -12,44 +15,8 @@ $desktop-min-width: 641px;
     margin: 0;
     padding: 0;
 
-    section {
-        padding: 0.5em;
-    }
 
-    footer {
-        padding: 0.5em;
-        font-size: 0.8em;
-        color: #777;
-        border-top: 1px solid #ccc;
-    }
-
-
-    section.search-results {
-        min-height: 4em;
-
-        .title {
-            font-size: 1.2em;
-            color: #888;
-            margin: .5em;
-        }
-
-    }
-
-    .btn.reset-app {
-        font-size: 1.1em;
-        display: block;
-        text-align: center;
-        margin: .5em auto;
-        border: 1px solid red;
-        background: none;
-        color: red;
-        opacity: .7;
-    }
-
-    .btn.reset-app:hover {
-        opacity: 1;
-    }
-
+    @import 'misc';
     @import "search";
     @import "items-list";
 }
@@ -58,5 +25,18 @@ $desktop-min-width: 641px;
     .SkriphyApp {
         text-align: center;
         //background: yellow; // for testing
+    }
+}
+
+
+
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }

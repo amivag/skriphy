@@ -1,0 +1,60 @@
+section {
+    padding: 0.5em;
+}
+
+footer {
+    padding: 0.5em;
+    font-size: 0.8em;
+    color: #777;
+    border-top: 1px solid #ccc;
+}
+
+
+section.search-results {
+    min-height: 10em;
+
+    .title {
+        font-size: 1.2em;
+        color: #888;
+        margin: .5em;
+    }
+
+}
+
+.btn.reset-app {
+    font-size: 1.1em;
+    display: block;
+    text-align: center;
+    margin: .5em auto;
+    border: 1px solid red;
+    background: none;
+    color: red;
+    opacity: .7;
+}
+
+.btn.reset-app:hover {
+    opacity: 1;
+}
+
+label.api-key-label {
+    background: #eee;
+    padding: .4em;
+    display: block;
+
+    span {
+        display: block;
+    }
+
+    input {
+        width: 100%;
+        padding: .3em;
+        font-size: 1.1em;
+    }
+}
+
+@media screen and (min-width: $desktop-min-width) {
+    label.api-key-label input {
+        width: auto;
+        min-width: 22em;
+    }
+}
