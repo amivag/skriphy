@@ -7,14 +7,15 @@ This is a demo project, codenamed "skriphy" built in ReactJS. It is a simple GIP
 - Browser localStorage for client caching.
 - Styles made with SASS pre-processor.
 
+# Notes
 
 Note #1: Please make sure you have a GIPHY API key to enable functionality in the app.
 
 Note #2: The GIFs in the search results are currently NOT optimized for mobile networks, due to their large filesize. This app is for demo purposes, avoid using this on a metered connection.
 
-#Technical info
+# Technical info
 
-The compiled ready-to-run project is in the "build" folder.
+The compiled ready-to-run project is in the **"build"** folder, but opening "index.html" in a browser.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). See CRA-README.md for more info.
 
