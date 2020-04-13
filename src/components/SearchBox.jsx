@@ -7,8 +7,7 @@ const MIN_SEARCH_TERM_CHARS = 3;
 export const SearchBox = ({
   searchInputValue,
   setSearchInputValue,
-  setSearchTerm,
-  setSearchLastPerformedTimestamp,
+  initiateGiphyAPISearchOnTerm,
 }) => {
   const isSearchActionAllowed =
     searchInputValue.length > 0 &&
@@ -36,8 +35,7 @@ export const SearchBox = ({
           onClick={(e) => {
             e.preventDefault();
             if (isSearchActionAllowed) {
-              setSearchTerm(searchInputValue);
-              setSearchLastPerformedTimestamp(Date.now());
+              initiateGiphyAPISearchOnTerm(searchInputValue);
             } else {
               console.log("Search term too short!");
             }

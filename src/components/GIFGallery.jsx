@@ -14,33 +14,23 @@ export const GIFGallery = ({
     return (
       <ul className="items-list">
         {giphyGalleryItems.map((giphyImageObject) => {
-          const {
-            itemId,
-            url,
-            urlGIFOriginal,
-            urlGIFPreview,
-            urlGIFFixedHeight,
-            urlGIFFixedWidth,
-          } = extractPropertiesFromAPIImageObject(giphyImageObject);
+          const { itemId } = extractPropertiesFromAPIImageObject(
+            giphyImageObject
+          );
 
           const isItemIdHidden = hiddenItemIds.indexOf(itemId) >= 0;
-          if (isItemIdHidden) 
-            return null 
-          else return (
+          if (isItemIdHidden) {
+            return null;
+          } else
+            return (
               <GIFImageItem
                 key={itemId}
                 {...{
-                  itemId,
-                  url,
-                  urlGIFOriginal,
-                  urlGIFPreview,
-                  urlGIFFixedHeight,
-                  urlGIFFixedWidth,
+                  giphyImageObject,
                   removeItemById,
                 }}
               />
             );
-
         })}
       </ul>
     );
@@ -51,22 +41,27 @@ GIFGallery.propTypes = {
   removeItemById: PropTypes.func,
 };
 
-const GIFImageItem = ({
-  itemId,
-  url,
-  urlGIFOriginal,
-  urlGIFPreview,
-  urlGIFFixedHeight,
-  urlGIFFixedWidth,
-  removeItemById,
-}) => {
+const GIFImageItem = ({ giphyImageObject, removeItemById }) => {
+  const {
+    itemId,
+    url,
+    urlGIFOriginal,
+    urlGIFPreview,
+    urlGIFFixedHeight,
+    urlGIFFixedWidth,
+  } = extractPropertiesFromAPIImageObject(giphyImageObject);
   return (
-    <li className="image-item">
+    <li className="image-item" key={itemId}>
       <img
+        style={{ opacity: 0 }}
         className="img"
+        id={itemId}
         src={urlGIFFixedWidth}
         alt={urlGIFFixedWidth}
         loading="lazy"
+        onLoad={() => {
+          fadeLoadedImg(itemId);
+        }}
       />
       <div className="controls">
         <button
@@ -98,3 +93,8 @@ GIFImageItem.propTypes = {
   urlGIFPreview: PropTypes.string,
   removeItemById: PropTypes.func,
 };
+
+function fadeLoadedImg(id) {
+  document.getElementById(id).style.transition = "opacity 1s";
+  document.getElementById(id).style.opacity = "1";
+}

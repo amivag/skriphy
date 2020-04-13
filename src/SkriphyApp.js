@@ -129,15 +129,17 @@ function SkriphyApp() {
     }
   };
 
+  const initiateGiphyAPISearchOnTerm = (term) => {
+    setSearchTerm(term);
+    setSearchLastPerformedTimestamp(Date.now());
+  };
+
   const setAPIKey = (apiKey) => {
     clientStore.saveAPIKey(apiKey);
     setGiphyAPIKey(apiKey);
   };
 
   const isAPIKeyEntered = giphyAPIKey.length > 8;
-
-  const visibleSearchResultsCount =
-    apiResults.length - apiResultsHiddenIds.length;
 
   return (
     <div className={`SkriphyApp ${appTheme}`}>
@@ -149,9 +151,7 @@ function SkriphyApp() {
               {...{
                 searchInputValue,
                 setSearchInputValue,
-                searchTerm,
-                setSearchTerm,
-                setSearchLastPerformedTimestamp,
+                initiateGiphyAPISearchOnTerm,
               }}
             />
           </section>
@@ -169,7 +169,6 @@ function SkriphyApp() {
                 <SectionGallery
                   {...{
                     searchTerm,
-                    visibleSearchResultsCount,
                     apiResults,
                     apiResultsHiddenIds,
                     removeItemById,

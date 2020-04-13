@@ -83,21 +83,25 @@ export const SectionFooter = ({
 
 export const SectionGallery = ({
   searchTerm,
-  visibleSearchResultsCount,
   apiResults,
   apiResultsHiddenIds,
   removeItemById,
-}) => (
-  <div className="state-success">
-    {searchTerm.length > 0 && (
-      <h2 className="title">
-        Results for '{searchTerm}' ({visibleSearchResultsCount})
-      </h2>
-    )}
-    <GIFGallery
-      giphyGalleryItems={apiResults}
-      hiddenItemIds={apiResultsHiddenIds}
-      removeItemById={removeItemById}
-    />
-  </div>
-);
+}) => {
+  const visibleSearchResultsCount =
+    apiResults.length - apiResultsHiddenIds.length;
+
+  return (
+    <div className="state-success">
+      {searchTerm.length > 0 && (
+        <h2 className="title">
+          Results for '{searchTerm}' ({visibleSearchResultsCount})
+        </h2>
+      )}
+      <GIFGallery
+        giphyGalleryItems={apiResults}
+        hiddenItemIds={apiResultsHiddenIds}
+        removeItemById={removeItemById}
+      />
+    </div>
+  );
+};
