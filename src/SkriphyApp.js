@@ -78,7 +78,7 @@ function SkriphyApp() {
   useEffect(() => {
     if (searchTerm.length > 0) {
       setAPILoadingStatus(API_STATUS.LOADING);
-      setApiResultsHiddenIds([]);
+      window.scrollTo({ top: 0, behavior: "smooth" });
 
       const artificialDelayMilliseconds = 1200; // for simulating slower network
       setTimeout(function () {
@@ -95,6 +95,7 @@ function SkriphyApp() {
               searchTerm,
               imageObjects: imagesData,
             });
+            setApiResultsHiddenIds([]);
             setAPILoadingStatus(API_STATUS.SUCCESS);
             setApiResults(imagesData);
           })

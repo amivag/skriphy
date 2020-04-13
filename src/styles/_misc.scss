@@ -35,9 +35,11 @@ label.api-key-label {
     }
 
     input {
+        background: #ddd;
         width: 100%;
         padding: .3em;
-        font-size: 1.1em;
+        font-size: 1em;
+        font-family: monospace;
     }
 }
 

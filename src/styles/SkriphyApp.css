@@ -86,9 +86,11 @@ button {
   display: block;
 }
 .SkriphyApp label.api-key-label input {
+  background: #ddd;
   width: 100%;
   padding: 0.3em;
-  font-size: 1.1em;
+  font-size: 1em;
+  font-family: monospace;
 }
 .SkriphyApp header .title {
   font-size: 2.5em;
