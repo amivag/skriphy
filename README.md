@@ -15,7 +15,7 @@ Note #2: The GIFs in the search results are currently NOT optimized for mobile n
 
 # Technical info
 
-The compiled ready-to-run project is in the **"build"** folder, but opening "index.html" in a browser.
+The compiled ready-to-run project is in the **"build"** folder, by opening "index.html" in a browser.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). See CRA-README.md for more info.
 
