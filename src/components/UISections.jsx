@@ -1,7 +1,7 @@
 import React from "react";
 
 import { GIFGallery } from "./GIFGallery";
-import { IconSVGLoader } from "./Icons";
+import { IconSVGLoader, IconSVGInvertTheme } from "./Icons";
 
 export const SectionStateIdle = () => (
   <div className="state-idle">
@@ -68,11 +68,11 @@ export const SectionFooter = ({
       </button>
       <button
         type="button"
-        className="btn reset-app"
+        className="btn toggle-theme"
         title="Toggle theme"
         onClick={toggleAppTheme}
       >
-        Switch Theme
+        <IconSVGInvertTheme />
       </button>
     </div>
     <div className="info">

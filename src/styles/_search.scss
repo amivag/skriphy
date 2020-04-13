@@ -35,13 +35,13 @@ section.giphy-search {
 
     .search-input {
         font-weight: normal;
-        padding: .2em;
+        padding: .2em .4em;
         width: 100%;
     }
 
     .search-input:focus {
-        font-weight: bold;
-        border-color: #000;
+        //font-weight: bold;
+        //border-color: #000;
     }
 
 }

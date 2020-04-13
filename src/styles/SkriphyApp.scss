@@ -4,8 +4,6 @@ $desktop-min-width: 641px;
 
 .SkriphyApp {
 
-    animation: fadein 250ms;
-
     text-align: center;
     font-size: 1em;
     display: block;
@@ -20,6 +18,12 @@ $desktop-min-width: 641px;
     @import 'misc';
     @import "search";
     @import "items-list";
+
+    footer {
+        // add space for mobile
+        // to allow the Giphy API Key input box to be up in the screen
+        padding-bottom: 26em;
+    }
 }
 
 @import "themes";
@@ -27,7 +31,11 @@ $desktop-min-width: 641px;
 @media screen and (min-width: $desktop-min-width) {
     .SkriphyApp {
         text-align: center;
+
         //background: yellow; // for testing
+        footer {
+            padding-bottom: 1em;
+        }
     }
 }
 

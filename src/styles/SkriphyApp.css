@@ -14,7 +14,7 @@ html {
 
 body {
   font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
@@ -27,8 +27,7 @@ body {
 *,
 *:before,
 *:after {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 input,
@@ -42,9 +41,13 @@ button {
   cursor: pointer;
 }
 
+.icon {
+  width: 1.2em;
+  height: 1.2em;
+  vertical-align: middle;
+}
+
 .SkriphyApp {
-  -webkit-animation: fadein 250ms;
-          animation: fadein 250ms;
   text-align: center;
   font-size: 1em;
   display: block;
@@ -55,122 +58,97 @@ button {
   margin: 0;
   padding: 0;
 }
-
 .SkriphyApp section {
   padding: 0.5em;
 }
-
 .SkriphyApp footer {
   padding: 0.5em;
   font-size: 0.8em;
   color: #777;
   border-top: 1px solid #ccc;
 }
-
 .SkriphyApp section.search-results {
   min-height: 10em;
 }
-
 .SkriphyApp section.search-results .title {
   font-size: 1.2em;
   color: #888;
-  margin: .5em;
+  margin: 0.5em;
 }
-
 .SkriphyApp .btn.reset-app {
   font-size: 1.1em;
   display: block;
   text-align: center;
-  margin: .5em auto;
+  margin: 0.5em auto;
   border: 1px solid red;
   background: none;
   color: red;
-  opacity: .7;
+  opacity: 0.7;
 }
-
 .SkriphyApp .btn.reset-app:hover {
   opacity: 1;
 }
-
 .SkriphyApp label.api-key-label {
   background: #eee;
-  padding: .4em;
+  padding: 0.4em;
   display: block;
 }
-
 .SkriphyApp label.api-key-label span {
   display: block;
 }
-
 .SkriphyApp label.api-key-label input {
   width: 100%;
-  padding: .3em;
+  padding: 0.3em;
   font-size: 1.1em;
 }
-
 @media screen and (min-width: 641px) {
   .SkriphyApp label.api-key-label input {
     width: auto;
     min-width: 22em;
   }
 }
-
 .SkriphyApp section.giphy-search {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 1;
 }
-
 .SkriphyApp .giphy-search-form {
   font-size: 1.1em;
 }
-
 .SkriphyApp .giphy-search-form .search-actions {
   display: inline-block;
 }
-
 .SkriphyApp .giphy-search-form .search-actions .icon {
   width: 1.1em;
   height: 1.1em;
 }
-
 .SkriphyApp .giphy-search-form .search-input,
 .SkriphyApp .giphy-search-form .btn {
   background: none;
   height: 2em;
   vertical-align: top;
-  margin-right: .2em;
-  margin-top: .2em;
+  margin-right: 0.2em;
+  margin-top: 0.2em;
 }
-
 .SkriphyApp .giphy-search-form .search-input-label {
-  margin-right: .2em;
+  margin-right: 0.2em;
   display: inline-block;
   width: 64%;
   max-width: 20em;
 }
-
 .SkriphyApp .giphy-search-form .search-input {
   font-weight: normal;
-  padding: .2em;
+  padding: 0.2em 0.4em;
   width: 100%;
 }
-
-.SkriphyApp .giphy-search-form .search-input:focus {
-  font-weight: bold;
-  border-color: #000;
-}
-
 .SkriphyApp .items-list {
-  -webkit-animation: inherit;
-          animation: inherit;
+  animation: inherit;
   font-size: 1em;
   line-height: 1.2em;
   min-height: 1em;
   list-style: none;
   margin: 0;
-  padding: .2em;
+  padding: 0.2em;
   /* Prevent vertical gaps */
   line-height: 0;
   -webkit-column-count: 1;
@@ -180,55 +158,36 @@ button {
   column-count: 1;
   column-gap: 0px;
 }
-
 .SkriphyApp .items-list > .image-item {
-  -webkit-animation: fadein 250ms;
-          animation: fadein 250ms;
+  animation: fadein 250ms;
   padding: 0;
   margin: 0.2em;
-  margin-bottom: .8em;
+  margin-bottom: 0.8em;
   position: relative;
   background: #fff;
   border: 1px solid #ccc;
   min-height: 4em;
   overflow: hidden;
 }
-
 .SkriphyApp .items-list > .image-item .img {
-  -webkit-animation: fadein 350ms;
-          animation: fadein 350ms;
+  animation: fadein 350ms;
   width: 100%;
   height: auto;
 }
-
 .SkriphyApp .items-list > .image-item .controls .btn {
   font-size: 1em;
   line-height: 1.1em;
   padding: 0.4em;
   border: none;
-  background: rgba(255, 255, 255, 0.8);
-  color: #222;
   margin: 0.08em;
 }
-
-.SkriphyApp .items-list > .image-item .controls .btn .icon {
-  width: 1.2em;
-  height: 1.2em;
-}
-
-.SkriphyApp .items-list > .image-item .controls .btn:hover {
-  background: #fff;
-}
-
 .SkriphyApp .items-list > .image-item:hover .controls,
 .SkriphyApp .items-list > .image-item:active .controls {
   display: block;
 }
-
 @media screen and (min-width: 641px) {
   .SkriphyApp .items-list {
-    -webkit-column-count: 6;
-            column-count: 6;
+    column-count: 6;
   }
   .SkriphyApp .items-list > .image-item {
     border: none;
@@ -248,16 +207,6 @@ button {
     display: block;
   }
 }
-
-@-webkit-keyframes fadein {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 @keyframes fadein {
   from {
     opacity: 0;
@@ -265,57 +214,83 @@ button {
   to {
     opacity: 1;
   }
+}
+.SkriphyApp footer {
+  padding-bottom: 26em;
 }
 
 .SkriphyApp.light {
   background: #f5f5f5;
   color: #333;
 }
-
 .SkriphyApp.light .items-list {
   background: #f0f0f0;
 }
-
-.SkriphyApp.light .giphy-search-form .search-input,
-.SkriphyApp.light .giphy-search-form .btn {
+.SkriphyApp.light .items-list > .image-item {
+  background: #fff;
+  border: 1px solid #ccc;
+}
+.SkriphyApp.light .search-input,
+.SkriphyApp.light .btn {
   background: #fff;
 }
-
-.SkriphyApp.light .giphy-search-form .search-input:hover,
-.SkriphyApp.light .giphy-search-form .btn:hover {
+.SkriphyApp.light .search-input:hover,
+.SkriphyApp.light .btn:hover {
   border-color: #bbb;
+  background: #fff;
+}
+.SkriphyApp.light .controls .btn {
+  background: rgba(255, 255, 255, 0.8);
+  color: #222;
+}
+.SkriphyApp.light .controls .btn:hover {
   background: #fff;
 }
 
 .SkriphyApp.dark {
-  background: #000;
+  background: #111;
   color: #eee;
 }
-
 .SkriphyApp.dark .items-list {
-  background: #333;
+  background: #222;
 }
-
-.SkriphyApp.dark .giphy-search-form .search-input,
-.SkriphyApp.dark .giphy-search-form .btn {
-  border-color: #777;
+.SkriphyApp.dark .items-list > .image-item {
+  background: #333;
+  border: 1px solid #444;
+}
+.SkriphyApp.dark .search-input {
+  border-color: #555;
   background: #333;
   color: #fafafa;
   fill: #fafafa;
 }
-
-.SkriphyApp.dark .giphy-search-form .search-input:hover,
-.SkriphyApp.dark .giphy-search-form .btn:hover {
+.SkriphyApp.dark .btn {
+  border-color: #555;
+  background: #555;
+  color: #fff;
+  fill: #fff;
+}
+.SkriphyApp.dark .search-input:hover,
+.SkriphyApp.dark .btn:hover {
   border-color: #bbb;
   background: #555;
+}
+.SkriphyApp.dark .controls .btn {
+  background: rgba(80, 80, 80, 0.8);
+  color: #fafafa;
+}
+.SkriphyApp.dark .controls .btn:hover {
+  background: #888;
 }
 
 @media screen and (min-width: 641px) {
   .SkriphyApp {
     text-align: center;
   }
+  .SkriphyApp footer {
+    padding-bottom: 1em;
+  }
 }
-
 @keyframes fadein {
   from {
     opacity: 0;
@@ -324,4 +299,5 @@ button {
     opacity: 1;
   }
 }
+
 /*# sourceMappingURL=SkriphyApp.css.map */

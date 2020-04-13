@@ -6,48 +6,79 @@
         background: #f0f0f0;
     }
 
-    .giphy-search-form {
+    .items-list>.image-item {
+        background: #fff;
+        border: 1px solid #ccc;
+    }
 
-        .search-input,
+
+    .search-input,
+    .btn {
+        background: #fff;
+    }
+
+    .search-input:hover,
+    .btn:hover {
+        border-color: #bbb;
+        background: #fff;
+    }
+
+    .controls {
         .btn {
-            background: #fff;
-
+            background: rgba(255, 255, 255, .8);
+            color: #222;
         }
 
-        .search-input:hover,
         .btn:hover {
-            border-color: #bbb;
             background: #fff;
         }
     }
+
 }
 
 
 .SkriphyApp.dark {
-    background: #000;
+    background: #111;
     color: #eee;
 
     .items-list {
+        background: #222;
+    }
+
+    .items-list>.image-item {
         background: #333;
+        border: 1px solid #444;
     }
 
-    .giphy-search-form {
+    .search-input {
+        border-color: #555;
+        background: #333;
+        color: #fafafa;
+        fill: #fafafa;
+    }
 
-        .search-input,
+    .btn {
+        border-color: #555;
+        background: #555;
+        color: #fff;
+        fill: #fff;
+    }
+
+
+    .search-input:hover,
+    .btn:hover {
+        border-color: #bbb;
+        background: #555;
+    }
+
+    .controls {
         .btn {
-            border-color: #777;
-            background: #333;
+            background: rgba(80, 80, 80, .8);
             color: #fafafa;
-            fill: #fafafa;
         }
 
-        .search-input:hover,
         .btn:hover {
-            border-color: #bbb;
-            background: #555;
+            background: #888;
         }
-
     }
-
-
 }
