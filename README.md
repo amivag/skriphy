@@ -16,5 +16,5 @@ Note #2: The GIFs in the search results are currently NOT optimized for mobile n
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). See CRA-README.md for more info.
 
-The files "src/SkriphyApp.js", as well as all the sub-folders in "src" contain code created by the author. All the rest, is mostly bootstrap code by create-react-app.
+The files "src/SkriphyApp.js", as well as all the sub-folders in "src" contain code created by the author (me). All the rest, is mostly bootstrap code by create-react-app.
 
