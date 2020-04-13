@@ -14,6 +14,8 @@ Note #2: The GIFs in the search results are currently NOT optimized for mobile n
 
 #Technical info
 
+The compiled ready-to-run project is in the "build" folder.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). See CRA-README.md for more info.
 
 The files "src/SkriphyApp.js", as well as all the sub-folders in "src" contain code created by the author (me). All the rest, is mostly bootstrap code by create-react-app.
