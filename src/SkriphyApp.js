@@ -141,7 +141,7 @@ function SkriphyApp() {
 
   return (
     <div className={`SkriphyApp ${appTheme}`}>
-      <SectionHeader />
+      <SectionHeader {...{ resetApp, toggleAppTheme }} />
       <main>
         {isAPIKeyEntered && (
           <section className="giphy-search">

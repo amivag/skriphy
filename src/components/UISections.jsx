@@ -31,18 +31,31 @@ export const SectionAPILoading = () => (
   </div>
 );
 
-export const SectionHeader = () => (
+export const SectionHeader = ({ resetApp, toggleAppTheme }) => (
   <header>
     <h1 className="title">skriphy</h1>
+    <div className="actions">
+      <button
+        type="button"
+        className="btn reset-app"
+        title="Reset all app data (except your API key)"
+        onClick={resetApp}
+      >
+        Reset!
+      </button>
+      <button
+        type="button"
+        className="btn toggle-theme"
+        title="Toggle theme"
+        onClick={toggleAppTheme}
+      >
+        <IconSVGInvertTheme />
+      </button>
+    </div>
   </header>
 );
 
-export const SectionFooter = ({
-  giphyAPIKey,
-  setAPIKey,
-  resetApp,
-  toggleAppTheme,
-}) => (
+export const SectionFooter = ({ giphyAPIKey, setAPIKey }) => (
   <footer>
     <label className="api-key-label">
       <span>GIPHY API Key: </span>
@@ -57,24 +70,7 @@ export const SectionFooter = ({
         }}
       />
     </label>
-    <div className="actions">
-      <button
-        type="button"
-        className="btn reset-app"
-        title="Reset all app data (except your API key)"
-        onClick={resetApp}
-      >
-        Reset Everything!
-      </button>
-      <button
-        type="button"
-        className="btn toggle-theme"
-        title="Toggle theme"
-        onClick={toggleAppTheme}
-      >
-        <IconSVGInvertTheme />
-      </button>
-    </div>
+
     <div className="info">
       GIPHY search by Vangelis Erotokritakis (April 2020)
     </div>

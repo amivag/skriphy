@@ -64,10 +64,13 @@ button {
 .SkriphyApp footer {
   padding: 0.5em;
   font-size: 0.8em;
-  color: #777;
-  border-top: 1px solid #ccc;
+}
+.SkriphyApp footer .info {
+  margin: 1em 0;
+  /* color: #333; */
 }
 .SkriphyApp section.search-results {
+  margin: 2em 0;
   min-height: 10em;
 }
 .SkriphyApp section.search-results .title {
@@ -75,21 +78,7 @@ button {
   color: #888;
   margin: 0.5em;
 }
-.SkriphyApp .btn.reset-app {
-  font-size: 1.1em;
-  display: block;
-  text-align: center;
-  margin: 0.5em auto;
-  border: 1px solid red;
-  background: none;
-  color: red;
-  opacity: 0.7;
-}
-.SkriphyApp .btn.reset-app:hover {
-  opacity: 1;
-}
 .SkriphyApp label.api-key-label {
-  background: #eee;
   padding: 0.4em;
   display: block;
 }
@@ -100,6 +89,23 @@ button {
   width: 100%;
   padding: 0.3em;
   font-size: 1.1em;
+}
+.SkriphyApp header .title {
+  font-size: 2.5em;
+  margin-top: 1.7em;
+  margin-bottom: 0.2em;
+}
+.SkriphyApp header .actions {
+  position: absolute;
+  top: 0.6em;
+  right: 0.6em;
+}
+.SkriphyApp header .actions .btn {
+  display: inline-block;
+  margin-left: 0.4em;
+  height: 2em;
+  min-width: 2.6em;
+  vertical-align: top;
 }
 @media screen and (min-width: 641px) {
   .SkriphyApp label.api-key-label input {
@@ -246,6 +252,13 @@ button {
 .SkriphyApp.light .controls .btn:hover {
   background: #fff;
 }
+.SkriphyApp.light .giphy-search {
+  background: rgba(255, 255, 255, 0.4);
+}
+.SkriphyApp.light footer {
+  color: #777;
+  border-top: 1px solid #ccc;
+}
 
 .SkriphyApp.dark {
   background: #111;
@@ -281,6 +294,13 @@ button {
 }
 .SkriphyApp.dark .controls .btn:hover {
   background: #888;
+}
+.SkriphyApp.dark .giphy-search {
+  background: rgba(0, 0, 0, 0.4);
+}
+.SkriphyApp.dark footer {
+  color: #bbb;
+  border-top: 1px solid #ccc;
 }
 
 @media screen and (min-width: 641px) {

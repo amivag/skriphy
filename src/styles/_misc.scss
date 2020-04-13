@@ -5,12 +5,16 @@ section {
 footer {
     padding: 0.5em;
     font-size: 0.8em;
-    color: #777;
-    border-top: 1px solid #ccc;
+
+    .info {
+        margin: 1em 0;
+        /* color: #333; */
+    }
 }
 
 
 section.search-results {
+    margin: 2em 0;
     min-height: 10em;
 
     .title {
@@ -21,23 +25,8 @@ section.search-results {
 
 }
 
-.btn.reset-app {
-    font-size: 1.1em;
-    display: block;
-    text-align: center;
-    margin: .5em auto;
-    border: 1px solid red;
-    background: none;
-    color: red;
-    opacity: .7;
-}
-
-.btn.reset-app:hover {
-    opacity: 1;
-}
 
 label.api-key-label {
-    background: #eee;
     padding: .4em;
     display: block;
 
@@ -51,6 +40,32 @@ label.api-key-label {
         font-size: 1.1em;
     }
 }
+
+
+header {
+
+    .title {
+        font-size: 2.5em;
+        margin-top: 1.7em;
+        margin-bottom: .2em;
+    }
+
+    .actions {
+        position: absolute;
+        top: .6em;
+        right: .6em;
+
+        .btn {
+            display: inline-block;
+            margin-left: .4em;
+            height: 2em;
+            min-width: 2.6em;
+            vertical-align: top;
+        }
+    }
+
+}
+
 
 @media screen and (min-width: $desktop-min-width) {
     label.api-key-label input {

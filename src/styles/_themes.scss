@@ -34,6 +34,14 @@
         }
     }
 
+    .giphy-search {
+        background: rgba(255, 255, 255, .4);
+    }
+
+    footer {
+        color: #777;
+        border-top: 1px solid #ccc;
+    }
 }
 
 
@@ -80,5 +88,14 @@
         .btn:hover {
             background: #888;
         }
+    }
+
+    .giphy-search {
+        background: rgba(0, 0, 0, .4);
+    }
+
+    footer {
+        color: #bbb;
+        border-top: 1px solid #ccc;
     }
 }
