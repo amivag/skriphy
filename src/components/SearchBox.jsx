@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import { IconSVGSearch, IconSVGClear } from "./Icons";
 
@@ -56,4 +57,10 @@ export const SearchBox = ({
       </div>
     </form>
   );
+};
+
+SearchBox.propTypes = {
+  searchInputValue: PropTypes.string,
+  setSearchInputValue: PropTypes.func,
+  initiateGiphyAPISearchOnTerm: PropTypes.func,
 };
