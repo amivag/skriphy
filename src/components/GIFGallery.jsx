@@ -59,7 +59,7 @@ const GIFImageItem = ({ giphyImageObject, removeItemById }) => {
         height={urlGIFFixedWidth_Height}
         loading="lazy"
         onLoad={() => {
-          fadeLoadedImg(itemId);
+          fadeInImg(itemId);
         }}
       />
       <div className="controls">
@@ -93,7 +93,7 @@ GIFImageItem.propTypes = {
   removeItemById: PropTypes.func,
 };
 
-function fadeLoadedImg(id) {
+function fadeInImg(id) {
   document.getElementById(id).style.transition = "opacity 1s";
   document.getElementById(id).style.opacity = "1";
 }
