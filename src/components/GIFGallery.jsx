@@ -45,10 +45,8 @@ const GIFImageItem = ({ giphyImageObject, removeItemById }) => {
   const {
     itemId,
     url,
-    urlGIFOriginal,
-    urlGIFPreview,
-    urlGIFFixedHeight,
     urlGIFFixedWidth,
+    urlGIFFixedWidth_Height,
   } = extractPropertiesFromAPIImageObject(giphyImageObject);
   return (
     <li className="image-item" key={itemId}>
@@ -58,6 +56,7 @@ const GIFImageItem = ({ giphyImageObject, removeItemById }) => {
         id={itemId}
         src={urlGIFFixedWidth}
         alt={urlGIFFixedWidth}
+        height={urlGIFFixedWidth_Height}
         loading="lazy"
         onLoad={() => {
           fadeLoadedImg(itemId);

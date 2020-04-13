@@ -19,8 +19,6 @@ import {
 
 import "./styles/SkriphyApp.css";
 
-//let myGIPHYAPIKey = "xIuBoWebXJkrn7kaq9jWPrZk6u6prPPy";
-
 function SkriphyApp() {
   const [appTheme, setAppTheme] = useState(APP_THEME.LIGHT);
   const [searchInputValue, setSearchInputValue] = useState("");
@@ -139,7 +137,7 @@ function SkriphyApp() {
     setGiphyAPIKey(apiKey);
   };
 
-  const isAPIKeyEntered = giphyAPIKey.length > 8;
+  const isAPIKeyEntered = giphyAPIKey.length > 8; // something is entered, no check if key is correct!
 
   return (
     <div className={`SkriphyApp ${appTheme}`}>

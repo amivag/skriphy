@@ -17,6 +17,7 @@ export function extractPropertiesFromAPIImageObject(giphyImageObject) {
     urlGIFPreview: giphyImageObject?.images?.preview_gif?.url,
     urlGIFFixedHeight: giphyImageObject?.images?.fixed_height?.url,
     urlGIFFixedWidth: giphyImageObject?.images?.fixed_width?.url,
+    urlGIFFixedWidth_Height: giphyImageObject?.images?.fixed_width?.height,
   };
 }
 
