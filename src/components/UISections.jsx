@@ -18,7 +18,7 @@ export const SectionAPIKeyWarning = () => (
 export const SectionAPIError = (errorMessage) => (
   <div className="state-error">
     <div>Oops... there was an error with your request, maybe try again?</div>
-    <div>{errorMessage}</div>
+    {/* <div>{JSON.stringify(errorMessage)}</div>*/}
   </div>
 );
 
