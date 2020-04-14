@@ -154,6 +154,9 @@ button {
   padding: 0.2em 0.4em;
   width: 100%;
 }
+.SkriphyApp .giphy-search-form button.btn.submit {
+  width: 2.8em;
+}
 .SkriphyApp .items-list {
   animation: inherit;
   font-size: 1em;
