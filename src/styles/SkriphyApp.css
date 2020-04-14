@@ -57,6 +57,7 @@ button {
   border: 1px solid transparent;
   margin: 0;
   padding: 0;
+  transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease;
 }
 .SkriphyApp section {
   padding: 0.5em;
