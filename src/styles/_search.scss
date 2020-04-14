@@ -1,47 +1,49 @@
 section.giphy-search {
-    position: sticky;
-    top: 0;
-    z-index: 1;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .giphy-search-form {
-    font-size: 1.1em;
+  font-size: 1.1em;
 
-    .search-actions {
-        display: inline-block;
+  .search-actions {
+    display: inline-block;
 
-        .icon {
-            width: 1.1em;
-            height: 1.1em;
-        }
+    .icon {
+      width: 1.1em;
+      height: 1.1em;
     }
+  }
 
-    .search-input,
-    .btn {
-        background: none;
-        height: 2em;
-        vertical-align: top;
-        margin-right: .2em;
-        margin-top: .2em;
-    }
+  .search-input,
+  .btn {
+    background: none;
+    height: 2em;
+    vertical-align: top;
+    margin-right: 0.2em;
+    margin-top: 0.2em;
+  }
 
+  .search-input-label {
+    margin-right: 0.2em;
+    display: inline-block;
+    width: 64%;
+    max-width: 20em;
+  }
 
-    .search-input-label {
-        margin-right: .2em;
-        display: inline-block;
-        width: 64%;
-        max-width: 20em;
-    }
+  .search-input {
+    font-weight: normal;
+    padding: 0.2em 0.4em;
+    width: 100%;
+  }
 
-    .search-input {
-        font-weight: normal;
-        padding: .2em .4em;
-        width: 100%;
-    }
+  .search-input:focus {
+    //font-weight: bold;
+    //border-color: #000;
+  }
 
-    .search-input:focus {
-        //font-weight: bold;
-        //border-color: #000;
-    }
-
+  button.btn.submit {
+    width: 2.8em;
+  }
 }

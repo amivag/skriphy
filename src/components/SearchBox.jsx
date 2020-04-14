@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 
 import { IconSVGSearch, IconSVGClear } from "./Icons";
@@ -10,6 +10,8 @@ export const SearchBox = ({
   setSearchInputValue,
   initiateGiphyAPISearchOnTerm,
 }) => {
+  const searchInputEl = useRef(null);
+
   const isSearchActionAllowed =
     searchInputValue.length > 0 &&
     searchInputValue.length >= MIN_SEARCH_TERM_CHARS;
@@ -22,6 +24,7 @@ export const SearchBox = ({
           name="searchInput"
           placeholder="Search for Giphies..."
           value={searchInputValue}
+          ref={searchInputEl}
           onChange={(e) => {
             const val = e.target.value;
             setSearchInputValue(val);
@@ -29,6 +32,17 @@ export const SearchBox = ({
         />
       </label>
       <div className="search-actions">
+        <button
+          disabled={searchInputValue.length === 0}
+          className="btn clear-search"
+          type="button"
+          onClick={() => {
+            setSearchInputValue("");
+            searchInputEl.current.focus();
+          }}
+        >
+          <IconSVGClear />
+        </button>
         <button
           disabled={!isSearchActionAllowed}
           className="btn submit"
@@ -43,16 +57,6 @@ export const SearchBox = ({
           }}
         >
           <IconSVGSearch />
-        </button>
-        <button
-          disabled={searchInputValue.length === 0}
-          className="btn clear-search"
-          type="button"
-          onClick={() => {
-            setSearchInputValue("");
-          }}
-        >
-          <IconSVGClear />
         </button>
       </div>
     </form>

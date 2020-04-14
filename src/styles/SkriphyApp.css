@@ -57,6 +57,7 @@ button {
   border: 1px solid transparent;
   margin: 0;
   padding: 0;
+  transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease;
 }
 .SkriphyApp section {
   padding: 0.5em;
@@ -91,6 +92,10 @@ button {
   padding: 0.3em;
   font-size: 1em;
   font-family: monospace;
+}
+.SkriphyApp label.api-key-label .apikey-input:not(:focus) {
+  color: transparent;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
 }
 .SkriphyApp header .title {
   font-size: 2.5em;
@@ -148,6 +153,9 @@ button {
   font-weight: normal;
   padding: 0.2em 0.4em;
   width: 100%;
+}
+.SkriphyApp .giphy-search-form button.btn.submit {
+  width: 2.8em;
 }
 .SkriphyApp .items-list {
   animation: inherit;

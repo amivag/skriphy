@@ -35,15 +35,7 @@ function SkriphyApp() {
   const [errorMessage, setErrorMessage] = useState("");
   const [giphyAPIKey, setGiphyAPIKey] = useState("");
 
-  const resetApp = () => {
-    clientStore.resetLocalDataExceptAPIKey();
-    setSearchInputValue("");
-    setApiResults([]);
-    setApiResultsHiddenIds([]);
-    setAPILoadingStatus(API_STATUS.IDLE);
-    setAppTheme(APP_THEME.LIGHT);
-  };
-
+  // On first component mount
   useEffect(() => {
     const {
       localGiphyAPIKey,
@@ -52,6 +44,8 @@ function SkriphyApp() {
       localSearchTerm,
       localAppTheme,
     } = clientStore.getDataFromLocal();
+
+    const predefinedGiphyApiKeyOnPage = window.predefinedGiphyApiKey;
 
     if (localImageObjects) {
       setApiResults(localImageObjects);
@@ -64,6 +58,9 @@ function SkriphyApp() {
     if (localHiddenImageIds) {
       setApiResultsHiddenIds(localHiddenImageIds);
     }
+    if (predefinedGiphyApiKeyOnPage) {
+      setGiphyAPIKey(predefinedGiphyApiKeyOnPage);
+    }
     if (localGiphyAPIKey) {
       setGiphyAPIKey(localGiphyAPIKey);
     }
@@ -75,6 +72,7 @@ function SkriphyApp() {
       "skriphy | ReactJS demo by Vangelis Erotokritakis (04/2020)";
   }, []);
 
+  // Start a new image search
   useEffect(() => {
     if (searchTerm.length > 0) {
       setAPILoadingStatus(API_STATUS.LOADING);
@@ -87,28 +85,45 @@ function SkriphyApp() {
         const searchResult = axios(searchURL);
         searchResult
           .then((response) => {
-            const imagesData = giphy.extractImagesObjectFromAPISearch(response);
-            if (!imagesData) {
-              // error in received data, not in the expected format
-            }
-            clientStore.saveNewSearchDataToLocal({
-              searchTerm,
-              imageObjects: imagesData,
-            });
-            setApiResultsHiddenIds([]);
-            setAPILoadingStatus(API_STATUS.SUCCESS);
-            setApiResults(imagesData);
+            handleNewImageDataFromAPI(response);
           })
           .catch((errorMsg) => {
-            setAPILoadingStatus(API_STATUS.ERROR);
-            setErrorMessage(errorMsg);
-            //window.alert(errorMsg);
+            handleNewImageDataAPIError(errorMsg);
           });
       }, artificialDelayMilliseconds);
     }
     // Line below is to stop complaining about missing dependencies...
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchLastPerformedTimestamp]);
+
+  const handleNewImageDataAPIError = (errorMsg) => {
+    setAPILoadingStatus(API_STATUS.ERROR);
+    setErrorMessage(errorMsg);
+    //window.alert(errorMsg);
+  };
+
+  const handleNewImageDataFromAPI = (apiResponse) => {
+    const imagesData = giphy.extractImagesObjectFromAPISearch(apiResponse);
+    if (!imagesData) {
+      // error in received data, not in the expected format
+    }
+    clientStore.saveNewSearchDataToLocal({
+      searchTerm,
+      imageObjects: imagesData,
+    });
+    setApiResultsHiddenIds([]);
+    setAPILoadingStatus(API_STATUS.SUCCESS);
+    setApiResults(imagesData);
+  };
+
+  const resetApp = () => {
+    clientStore.resetLocalDataExceptAPIKey();
+    setSearchInputValue("");
+    setApiResults([]);
+    setApiResultsHiddenIds([]);
+    setAPILoadingStatus(API_STATUS.IDLE);
+    setAppTheme(APP_THEME.LIGHT);
+  };
 
   const removeItemById = (itemId) => {
     const updatedHiddenIds = [...apiResultsHiddenIds, itemId];
