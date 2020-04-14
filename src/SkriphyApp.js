@@ -82,13 +82,12 @@ function SkriphyApp() {
       setTimeout(function () {
         // https://developers.giphy.com/docs/api/endpoint/#search
         const searchURL = giphy.getSearchURL(giphyAPIKey, searchTerm);
-        const searchResult = axios(searchURL);
-        searchResult
+        axios(searchURL)
           .then((response) => {
             handleNewImageDataFromAPI(response);
           })
-          .catch((errorMsg) => {
-            handleNewImageDataAPIError(errorMsg);
+          .catch((error) => {
+            handleNewImageDataAPIError(error);
           });
       }, artificialDelayMilliseconds);
     }
@@ -159,20 +158,18 @@ function SkriphyApp() {
     <div className={`SkriphyApp ${appTheme}`}>
       <SectionHeader {...{ resetApp, toggleAppTheme }} />
       <main>
-        {isAPIKeyEntered && (
-          <section className="giphy-search">
-            <SearchBox
-              {...{
-                searchInputValue,
-                setSearchInputValue,
-                initiateGiphyAPISearchOnTerm,
-              }}
-            />
-          </section>
-        )}
         {!isAPIKeyEntered && <SectionAPIKeyWarning />}
         {isAPIKeyEntered && (
           <Fragment>
+            <section className="giphy-search">
+              <SearchBox
+                {...{
+                  searchInputValue,
+                  setSearchInputValue,
+                  initiateGiphyAPISearchOnTerm,
+                }}
+              />
+            </section>
             <section className="search-results">
               {apiLoadingStatus === API_STATUS.IDLE && <SectionStateIdle />}
               {apiLoadingStatus === API_STATUS.LOADING && <SectionAPILoading />}
@@ -193,9 +190,7 @@ function SkriphyApp() {
           </Fragment>
         )}
       </main>
-      <SectionFooter
-        {...{ giphyAPIKey, setAPIKey, resetApp, toggleAppTheme }}
-      />
+      <SectionFooter {...{ giphyAPIKey, setAPIKey }} />
     </div>
   );
 }
