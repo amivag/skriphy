@@ -45,6 +45,8 @@ function SkriphyApp() {
       localAppTheme,
     } = clientStore.getDataFromLocal();
 
+    const predefinedGiphyApiKeyOnPage = window.predefinedGiphyApiKey;
+
     if (localImageObjects) {
       setApiResults(localImageObjects);
       setAPILoadingStatus(API_STATUS.SUCCESS);
@@ -55,6 +57,9 @@ function SkriphyApp() {
     }
     if (localHiddenImageIds) {
       setApiResultsHiddenIds(localHiddenImageIds);
+    }
+    if (predefinedGiphyApiKeyOnPage) {
+      setGiphyAPIKey(predefinedGiphyApiKeyOnPage);
     }
     if (localGiphyAPIKey) {
       setGiphyAPIKey(localGiphyAPIKey);
